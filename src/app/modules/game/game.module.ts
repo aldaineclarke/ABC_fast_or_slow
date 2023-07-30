@@ -2,16 +2,24 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
 import { MainPageComponent } from './main-page/main-page.component';
+import { CreateServerComponent } from './create-server/create-server.component';
+import { GameComponent } from './game.component';
+import { GameRoutingModule } from './game-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 
 
 @NgModule({
   declarations: [
     HomeComponent,
-    MainPageComponent
+    MainPageComponent,
+    CreateServerComponent,
+    GameComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    GameRoutingModule,
+    SharedModule
   ]
 })
 export class GameModule { }

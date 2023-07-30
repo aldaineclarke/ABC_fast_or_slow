@@ -1,12 +1,17 @@
-<section class="container mh-100">
+<section class="container">
     <div class="row">
-        <div class="col game-box">
-            <h1>ABC Fast or Slow</h1>
-            <div class="options">
-
-                <button data-bs-target="#joinServerModal" data-bs-toggle="modal">Join Server</button>
-                <button data-bs-target="#createServerModal" data-bs-toggle="modal">Create Server</button>
+        <div class="col">
+            <div class="home">
+                <h1>Welcome to ABC Fast or Slow</h1>
+                <ul class="home__options" role="navigation">
+                    <li class="nav_item" data-bs-target="#joinServerModal" data-bs-toggle="modal">Sign Up</li>
+                    <li class="nav_item" data-bs-target="#joinServerModal" data-bs-toggle="modal">Join Server</li>
+                    <li class="nav_item" routerLink="/game/create-server">Create Server</li>
+                    <li class="nav_item" data-bs-target="#createServerModal" data-bs-toggle="modal">Settings</li>
+                </ul>
             </div>
+            <p class="text-center"><span class="fw-semibold">Note:</span> The purpose of the game isn't to win, but to make sure your opponents doesn't.</p>
+
         </div>
     </div>
 </section>
