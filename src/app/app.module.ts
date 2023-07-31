@@ -5,7 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GameModule } from './modules/game/game.module';
 import { SocketIoModule } from 'ngx-socket-io';
-
+import { SharedModule } from './modules/shared/shared.module';
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -18,6 +19,8 @@ import { SocketIoModule } from 'ngx-socket-io';
         transports: ['websocket'],
       },
     }),
+    BrowserAnimationsModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,0 +1,38 @@
+.create-form{
+    gap: 1rem;
+
+    label{
+        font-size: 1rem;
+        font-weight: 500;
+        display:flex;
+        gap: 10px;
+    }
+    input{
+        border: none;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.425);
+        outline: none;
+        padding: 0px 10px;
+
+    }
+
+
+}
+
+.chips{
+    display:flex;
+    padding: 0;
+    gap: 5px;
+
+    li{
+        list-style-type: none;
+        border: 1px solid lightblue;
+        padding: 4px 10px;
+        font-size: .8rem;
+        border-radius: 3rem;
+        cursor: pointer;
+        transition: background-color 300ms linear;
+    }
+    li.active{
+        background-color: lightblue;
+    }
+}

@@ -1,7 +1,63 @@
-<section class="container mh-100">
+<section class="container">
     <div class="row">
-        <div class="col game-box">
-            
+        <div class="col">
+            <div class="home">
+                <h1>Welcome to ABC Fast or Slow</h1>
+                <ul class="home__options" role="navigation">
+                    <li class="nav_item" data-bs-target="#joinServerModal" data-bs-toggle="modal">Sign Up</li>
+                    <li class="nav_item" data-bs-target="#joinServerModal" data-bs-toggle="modal">Join Server</li>
+                    <li class="nav_item" routerLink="/game/create-server">Create Server</li>
+                    <li class="nav_item" data-bs-target="#createServerModal" data-bs-toggle="modal">Settings</li>
+                </ul>
+            </div>
+            <p class="text-center"><span class="fw-semibold">Note:</span> The purpose of the game isn't to win, but to make sure your opponents doesn't.</p>
+
         </div>
     </div>
 </section>
+<div class="modal fade" id="createServerModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="usernameModalToggleLabel">Create Server</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Username:</label>
+                  <input type="text" class="form-control" id="recipient-name">
+                </div>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" >Create Server</button>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="modal fade" id="joinServerModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="usernameModalToggleLabel">Join Server</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Username:</label>
+                  <input type="text" class="form-control" id="recipient-name">
+                </div>
+                <div class="mb-3">
+                  <label for="room-ID" class="col-form-label">Room ID:</label>
+                  <input type="text" class="form-control" id="room-ID">
+                </div>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" >Join Server</button>
+        </div>
+      </div>
+    </div>
+</div>
