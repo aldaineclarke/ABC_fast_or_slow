@@ -31,7 +31,6 @@ export class CreateServerComponent {
     if(event.key == 'Enter' && this.columnField?.value){
       this.createField();
     }
-    console.log(event.key)
   }
 
   columnField = new FormControl();
