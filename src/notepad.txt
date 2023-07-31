@@ -1,0 +1,32 @@
+import { Component, OnInit } from '@angular/core';
+import { SocketService } from './services/socket.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+})
+export class AppComponent implements OnInit {
+  title = 'ABC_fast_or_slow';
+
+  constructor(private socket: SocketService) {}
+  ngOnInit(): void {
+    this.sampleListenerFunction()
+  }
+
+  // sample emitter
+  smapleEmitFunction() {
+    this.socket.emit('emitter name', { key: 'value' });
+  }
+
+  //sample listener ---- call back function anywhere, listener will be called instantaneously, whether its in the onInit or AfterViewInit
+  sampleListenerFunction() {
+    this.socket.on(
+      'someone',
+      (data) => {
+        console.log(data);
+      },
+      `unique key`
+    );
+  }
+}
