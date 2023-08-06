@@ -1,0 +1,11 @@
+<section>
+    <form [formGroup]="gameForm" class="form-row">
+        <div class="col-md-4" *ngFor="let field of fields" >
+            <label class="d-flex flex-column">
+                <span>{{field | titlecase }}</span>
+                <input type="text" formControlName="field-{{field}}" style="letter-spacing: 1px;">
+            </label>
+        </div>
+        
+    </form>
+</section>
