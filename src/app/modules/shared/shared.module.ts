@@ -8,6 +8,9 @@ const modules = [
   ReactiveFormsModule
 
 ]
+const customDeclarations = [
+  LoadingComponent,
+]
 
 
 @NgModule({
@@ -16,8 +19,8 @@ const modules = [
   ],
   imports: [
     CommonModule,
-    ...modules
+    ...modules,
   ],
-  exports: [...modules]
+  exports: [...modules, ...customDeclarations]
 })
 export class SharedModule { }
