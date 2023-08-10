@@ -8,7 +8,6 @@ export class AutofocusDirective{
     @Input('appAutofocus') focused !: boolean;
     ngAfterViewInit():void{
         if(this.focused){
-            console.log(this.element.nativeElement)
             this.element.nativeElement.focus();
         }
     }
