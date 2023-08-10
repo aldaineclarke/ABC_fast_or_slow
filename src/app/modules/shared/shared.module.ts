@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoadingComponent } from './components/loading/loading.component';
+import { AutofocusDirective } from 'src/app/directives/autofocus.directive';
 
 
 const modules = [
@@ -10,13 +11,13 @@ const modules = [
 ]
 const customDeclarations = [
   LoadingComponent,
+  AutofocusDirective
+
 ]
 
 
 @NgModule({
-  declarations: [
-    LoadingComponent
-  ],
+  declarations: customDeclarations,
   imports: [
     CommonModule,
     ...modules,
