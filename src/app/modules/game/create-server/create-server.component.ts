@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-create-server',
@@ -7,6 +9,9 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./create-server.component.scss']
 })
 export class CreateServerComponent {
+
+  loaderService = inject(LoadingService)
+  router = inject(Router);
 
   items:GameField[]  = [
     {item: "Name", selected:true},
@@ -40,6 +45,12 @@ export class CreateServerComponent {
     newField.item = this.columnField?.value;
     this.items.push(newField);
     this.columnField.reset();
+  }
+
+  createServer(){
+      // this.loaderService.setMessage({main_message: "Creating Server"});
+      console.log("Form Submitted");
+      this.router.navigate(['/game/main-page'])
   }
 }
 

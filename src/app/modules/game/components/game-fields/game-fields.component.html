@@ -1,0 +1,12 @@
+<section>
+    <form [formGroup]="gameForm" class="game-form">
+        <div class="" *ngFor="let field of fields; let i = index" >
+            <label class="d-flex flex-column">
+                <input [appAutofocus]="i==0" value="{{i}}" type="text" class="game-field" formControlName="field-{{field}}" style="letter-spacing: 1px;" placeholder="{{ field |titlecase}}">
+            </label>
+        </div>
+    </form>
+    <div class="cta">
+        <button class="stop-btn circle-btn"><span>Stop Round</span></button>
+    </div>
+</section>

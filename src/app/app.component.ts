@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { SlideFromLeft } from './utilities/route-animations';
+import { LoadingService } from './services/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ export class AppComponent {
   //     }
   //   })
   // }
-
+  
+  loaderService = inject(LoadingService);
 
 }
