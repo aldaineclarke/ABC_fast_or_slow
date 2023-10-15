@@ -1,0 +1,22 @@
+.user__card{
+    transition: 200ms linear transform; 
+    .user__img{
+        height: 50px;
+        width:50px;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: center;
+    }
+    .user__options{
+        cursor: pointer;
+    }
+
+    // .user__username span{
+    //     white-space: nowrap;
+    //     text-overflow: ellipsis;
+
+    // }
+    &:hover{
+        transform: scale(1.1);
+    }
+}

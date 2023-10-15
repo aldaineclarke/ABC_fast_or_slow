@@ -8,6 +8,7 @@ import { GameRoutingModule } from './game-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { LetterGeneratorComponent } from './components/letter-generator/letter-generator.component';
 import { GameFieldsComponent } from './components/game-fields/game-fields.component';
+import { LobbyComponent } from './lobby/lobby.component';
 
 
 
@@ -18,7 +19,8 @@ import { GameFieldsComponent } from './components/game-fields/game-fields.compon
     CreateServerComponent,
     GameComponent,
     LetterGeneratorComponent,
-    GameFieldsComponent
+    GameFieldsComponent,
+    LobbyComponent
   ],
   imports: [
     CommonModule,
