@@ -1,6 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;500;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;500;700;900&family=Tillana:wght@400;500;600;700&display=swap');
+
+@import 'ngx-toastr/toastr';
+
 *{
     box-sizing: border-box;
     // font-family: Inter, sans-serif;

@@ -1,0 +1,5 @@
+<div class="form-validation">
+    <ng-container *ngFor="let entry of validationDictionary | keyvalue">
+      <p *ngIf="control?.hasError(entry.key) && control.touched" class="form-error">{{entry.value.replaceAll("{0}", controlName).replaceAll('{1}', minLength.toString()).replaceAll('{1}', control.errors?.['maxlength'])}}</p>
+    </ng-container>
+  </div>
