@@ -9,12 +9,16 @@ import { SharedModule } from './modules/shared/shared.module';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { httpInterceptorProviders } from './interceptors';
 import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     GameModule,
+    ToastrModule.forRoot({}),
+
     SocketIoModule.forRoot({
       url: 'http://127.0.0.1:4040/gameroom', //server url -- should be updated to match server
       options: {

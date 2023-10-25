@@ -4,11 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoadingComponent } from './components/loading/loading.component';
 import { AutofocusDirective } from 'src/app/directives/autofocus.directive';
 import { ValidationComponent } from './components/validation/validation.component';
-
-
 const modules = [
-  ReactiveFormsModule
-
+  ReactiveFormsModule,
 ]
 const customDeclarations = [
   LoadingComponent,
