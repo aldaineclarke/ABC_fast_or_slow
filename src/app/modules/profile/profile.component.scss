@@ -1,0 +1,24 @@
+.img-wrapper{
+    height: 250px;
+    width:250px;
+    padding:10px;
+    border: 2px solid black;
+    border-radius: 50%;
+
+    img{
+        height:100%;
+        width: 100%;
+        object-fit: contain;
+        object-position: center;
+        border-radius: 50%;
+
+
+    }
+}
+.room-info-card{
+    cursor: pointer;
+    p{
+        margin: 0;
+    }
+    
+}
