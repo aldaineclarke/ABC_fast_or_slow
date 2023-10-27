@@ -6,13 +6,15 @@ import { AuthComponent } from './auth.component';
 import { RegisterComponent } from './register/register.component';
 import { SharedModule } from '../shared/shared.module';
 import { PasswordMatchDirective } from 'src/app/directives/password-match.directive';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
   declarations: [
     AuthComponent,
     RegisterComponent,
-    PasswordMatchDirective
+    PasswordMatchDirective,
+    LoginComponent
   ],
   imports: [
     CommonModule,

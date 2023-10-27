@@ -23,9 +23,16 @@
     
 }
 .create-room{
+    cursor: pointer;
+
     svg{
         height:40px;
         width:40px;
     }
+    display:flex;
+    flex-direction: column;
+    gap:.6rem;
+    justify-content: center;
+    align-items: center;
     
 }

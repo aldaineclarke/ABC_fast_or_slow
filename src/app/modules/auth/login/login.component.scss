@@ -1,0 +1,19 @@
+.create-form{
+    gap: 1rem;
+
+    label{
+        font-size: 1rem;
+        font-weight: 500;
+        display:flex;
+        gap: 10px;
+    }
+    input{
+        border: none;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.425);
+        outline: none;
+        padding: 0px 10px;
+
+    }
+
+
+}
