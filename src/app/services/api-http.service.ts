@@ -19,9 +19,9 @@ export class ApiHttpService {
     return qp;
   }
 
-  public get(url:string, queryParams:{}):Observable<any>;
-  public get(url:string, queryParams:string,){
-    let qp = this.configureQueryParams(queryParams);
+  public get(url:string, queryParams?:{}):Observable<any>;
+  public get(url:string, queryParams?:string,){
+    let qp = (queryParams)? this.configureQueryParams(queryParams) : "";
     return this._http.get(`${url}${qp}`, );
   }
 
