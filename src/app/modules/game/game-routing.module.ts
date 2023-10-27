@@ -11,7 +11,7 @@ const routes: Routes = [
     path: "", 
     children:[
       { path:'',pathMatch:'full', component:HomeComponent, data:{animation: "home"}},
-      {path: "create-server", component:CreateServerComponent, data:{animation: "create"}},
+      {path: "create-room", component:CreateServerComponent, data:{animation: "create"}},
       {path: "main-page", component:MainPageComponent, data:{animation: "create"}},
       {path: "lobby", component:LobbyComponent, data:{animation: "create"}}
     ],
