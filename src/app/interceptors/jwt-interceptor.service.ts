@@ -16,7 +16,7 @@ export class JwtInterceptorService implements HttpInterceptor{
 
     if(this.authService.isLoggedIn()){
       req = req.clone({
-        setHeaders: {Authentication: `Bearer ${this.authService.JWT}`}
+        setHeaders: {Authorization: `Bearer ${this.authService.JWT}`}
       });
     }
 
