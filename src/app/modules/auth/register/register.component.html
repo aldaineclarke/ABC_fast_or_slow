@@ -21,6 +21,20 @@
             <form class="d-flex flex-column create-form" [formGroup]="registrationForm" (submit)="register()">
                 <div class="form-group">
                     <label>
+                        <span>Firstname:</span>
+                        <input type="text" placeholder="Firstname" formControlName="firstName" required>
+                    </label>
+                    <app-validation [control]="registrationForm.controls.firstName" controlName="Firstname"></app-validation>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span>Lastname:</span>
+                        <input type="text" placeholder="Lastname" formControlName="lastName" required>
+                    </label>
+                    <app-validation [control]="registrationForm.controls.lastName" controlName="Lastname"></app-validation>
+                </div>
+                <div class="form-group">
+                    <label>
                         <span>Username:</span>
                         <input type="text" placeholder="Username" formControlName="username" required>
                     </label>
