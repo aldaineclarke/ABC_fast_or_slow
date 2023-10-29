@@ -35,6 +35,7 @@ export class LoginComponent {
         next:(res:{[x:string]:any})=>{
           console.log(res)
           this.authService.JWT = res['data']['token'];
+          this.authService.saveuser(res['data']['user'])
           this.router.navigate(['/profile']);
 
         },
