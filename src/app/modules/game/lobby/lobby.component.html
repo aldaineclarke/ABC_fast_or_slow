@@ -1,4 +1,4 @@
-<section class="container">
+<section class="container" *ngIf="roomData">
     <div class="row mt-5">
         <h1>Server Lobby</h1>
     </div>
@@ -7,9 +7,9 @@
             <div class="room-data">
                 <div class="d-flex gap-4">
                     <div class="d-flex round-info gap-5">
-                        <p><span class="fw-semibold">Player:</span> Johnny76</p>
-                        <p><span class="fw-semibold">Server Name:</span> Good Kid Mad City</p>
-                        <p><span class="fw-semibold">Server Count:</span> {{users.length}}/{{totalInRoom}}</p>
+                        <p><span class="fw-semibold">Player:</span> {{user.username}}</p>
+                        <p><span class="fw-semibold">Server Name:</span>{{roomData.name}}</p>
+                        <p><span class="fw-semibold">Server Count:</span> {{socketServer.playersConnected.length}}/{{roomData.player_limit}}</p>
                         <p class="d-flex align-items-center gap-2">
                             <i class="fas fa-share-alt"></i>
                             <span>Share link</span> 
@@ -19,14 +19,14 @@
             </div>
         </div>
     </div>
-    <div class="row mt-5">
-        <div class="col-lg-3" *ngFor="let user of users">
+    <div class="row mt-5 g-4">
+        <div class="col-lg-3" *ngFor="let user of socketServer.playersConnected">
             <div class="card user__card" >
                 <div class="w-full d-flex gap-2 p-2">
-                    <img class="user__img" [src]="user.img" alt="user Icon">
+                    <img class="user__img" src="assets/img/ani-profile/penguin.png" alt="user Icon">
                     <div class="user__details flex-grow-1">
                         <p class="m-0 user__username"><span  class="fw-semibold">Name: </span><span class="fw-medium">{{user.username}}</span></p>
-                        <p class="m-0">
+                        <!-- <p class="m-0">
                             <span class="fw-semibold">Status: </span>
                             <span class="fw-medium" 
                             [ngClass]="{
@@ -34,7 +34,7 @@
                                 'text-muted': user.status == 'Connecting',
                                 'text-danger': user.status == 'Disconnected',
 
-                            }">{{user.status}}</span></p>
+                            }">{{user.status}}</span></p> -->
 
                     </div>
                     <div class="user__options d-flex align-items-center justify-content-center bg-muted" title="Remove user">

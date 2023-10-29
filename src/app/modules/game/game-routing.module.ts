@@ -13,7 +13,7 @@ const routes: Routes = [
       { path:'',pathMatch:'full', component:HomeComponent, data:{animation: "home"}},
       {path: "create-room", component:CreateServerComponent, data:{animation: "create"}},
       {path: "main-page", component:MainPageComponent, data:{animation: "create"}},
-      {path: "lobby", component:LobbyComponent, data:{animation: "create"}}
+      {path: "lobby/:room_id", component:LobbyComponent, data:{animation: "create"}}
     ],
     component: GameComponent
   },

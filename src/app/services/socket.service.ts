@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
+import { ToastrService } from 'ngx-toastr';
 
 interface ListenerCallback {
   (data: any): void;
@@ -13,16 +14,36 @@ interface ListenerObject {
   providedIn: 'root',
 })
 export class SocketService {
+  notif = inject(ToastrService)
   constructor(private socket: Socket) {
     this.registerListeners();
-    console.log(this.listenersAndEvents);
   }
+
+  playersConnected:{username:string, email: string}[] = [];
+
 
   //listeners and events
   listenersAndEvents: Record<string, ListenerObject> = {
-    round_start: {},
-    stopRound: {},
-    player_connect: {},
+    join_room: {
+      join_room_cb : (data)=>{
+        console.log(data)
+      }
+    },
+    stop_round: {
+      stop_round_cb:(object)=>{
+
+      }
+    },
+    player_connected: {
+      player_connect_cb: (data)=>{
+        this.playersConnected = data['players'];
+      }
+    },
+    room_connect_error: {
+      player_connect_cb: (data)=>{
+        this.notif.error(data)
+      }
+    },
   };
 
   // Listener registration
@@ -32,6 +53,7 @@ export class SocketService {
         console.log('LISTENER AUTOMIZER', key);
         Object.values(this.listenersAndEvents[key]).forEach((cb) => {
           cb(object);
+
         });
       });
     });

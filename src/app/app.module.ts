@@ -20,7 +20,7 @@ import { ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot({}),
 
     SocketIoModule.forRoot({
-      url: 'http://127.0.0.1:4040/gameroom', //server url -- should be updated to match server
+      url: 'http://localhost:4040/gameroom', //server url -- should be updated to match server
       options: {
         transports: ['websocket'],
       },
