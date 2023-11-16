@@ -29,9 +29,34 @@ export class SocketService {
         console.log(data)
       }
     },
-    stop_round: {
-      stop_round_cb:(object)=>{
-
+    start_game: {
+      start_game_cb: (data)=>{
+        console.log(data)
+      }
+    },
+    choose_letter: {
+      choose_letter_cb:()=>{
+        console.log("I should be called");
+      }
+    },
+    countdown: {
+      countdown_cb:(data)=>{
+        console.log("Letter selected",data)
+      }
+    },
+    start_round: {
+      start_round_cb:(data)=>{
+        console.log("round_start",data)
+      }
+    },
+    stop_round:{
+      stop_round_cb:(data)=>{
+        console.log("stop round was called")
+      } 
+    },
+    letter_selected: {
+      letter_selected_cb:(data)=>{
+        console.log("Letter selected",data)
       }
     },
     player_connected: {

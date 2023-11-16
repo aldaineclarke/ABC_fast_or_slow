@@ -1,8 +1,8 @@
 <section class="loader-container" *ngIf="messageObj | async as messageObj">
     <div class="messages">
         <p class="main-message h4">{{messageObj.main_message}}</p>
-        <div class="side messages">
-            <span *ngFor="let message of messageObj.side_messages">message</span>
+        <div class="side messages text-center">
+            <span *ngFor="let message of messageObj.side_messages">{{message}}</span>
         </div>
     </div>
     <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>

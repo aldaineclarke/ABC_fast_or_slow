@@ -61,26 +61,40 @@ export class LobbyComponent {
   }
 
   totalInRoom = 6;
-    users = [
-      {
-        username: "David",
-        status: "Connected",
-        img: "assets/img/ani-profile/penguin.png"
-      },
-      {
-        username: "Johnny76",
-        status: "Connected",
-        img: "assets/img/ani-profile/penguin.png"
-      },
-      {
-        username: "Wario_must_win",
-        status: "Connecting",
-        img: "assets/img/ani-profile/penguin.png"
-      },
-      {
-        username: "Marcus",
-        status: "Disconnected",
-        img: "assets/img/ani-profile/penguin.png"
-      },
-    ]
+    // users = [
+    //   {
+    //     username: "David",
+    //     status: "Connected",
+    //     img: "assets/img/ani-profile/penguin.png"
+    //   },
+    //   {
+    //     username: "Johnny76",
+    //     status: "Connected",
+    //     img: "assets/img/ani-profile/penguin.png"
+    //   },
+    //   {
+    //     username: "Wario_must_win",
+    //     status: "Connecting",
+    //     img: "assets/img/ani-profile/penguin.png"
+    //   },
+    //   {
+    //     username: "Marcus",
+    //     status: "Disconnected",
+    //     img: "assets/img/ani-profile/penguin.png"
+    //   },
+    // ]
+
+  startGame(){
+    this.user = this.authService.currentUser!;
+    let dataObj = {
+      token: this.authService.JWT,
+      email:this.user.email, 
+      username:this.user.username, 
+      id: this.user._id, 
+    }
+    this.socketServer.emit("start_game", {room_id: this.room_id, data: btoa(JSON.stringify(dataObj))});
+    this.socketServer.on("choose_letter", ()=>{
+      this.router.navigate(["/game/main-page"]);
+    }, "choose_letter_cb")
+  }
 }

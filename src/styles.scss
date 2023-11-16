@@ -63,3 +63,21 @@ main{
 .circle-btn:hover::after{
     transform: scaleX(1);
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+// MATERIAL STYLES
+// .cdk-overlay-container{
+//     // position:absolute;
+//     // top:0;
+//     // left:0;
+//     // bottom:0;
+//     // right:0;
+//     // min-height:100vh;
+//     // min-width:100vw;
+//     // z-index:18;
+//     // display:grid;
+//     // place-items: center;
+// }
+// .cdk-global-overlay-wrapper { display: flex; position:absolute}

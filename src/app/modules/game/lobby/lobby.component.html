@@ -20,21 +20,21 @@
         </div>
     </div>
     <div class="row mt-5 g-4">
-        <div class="col-lg-3" *ngFor="let user of socketServer.playersConnected">
+        <div class="col-md-3" *ngFor="let player of socketServer.playersConnected">
             <div class="card user__card" >
                 <div class="w-full d-flex gap-2 p-2">
                     <img class="user__img" src="assets/img/ani-profile/penguin.png" alt="user Icon">
                     <div class="user__details flex-grow-1">
-                        <p class="m-0 user__username"><span  class="fw-semibold">Name: </span><span class="fw-medium">{{user.username}}</span></p>
+                        <p class="m-0 user__username"><span  class="fw-semibold">Name: </span><span class="fw-medium">{{(player.username == user.username)? "You":player.username}}</span></p>
                         <!-- <p class="m-0">
                             <span class="fw-semibold">Status: </span>
                             <span class="fw-medium" 
                             [ngClass]="{
-                                'text-success': user.status == 'Connected',
-                                'text-muted': user.status == 'Connecting',
-                                'text-danger': user.status == 'Disconnected',
+                                'text-success': player.status == 'Connected',
+                                'text-muted': player.status == 'Connecting',
+                                'text-danger': player.status == 'Disconnected',
 
-                            }">{{user.status}}</span></p> -->
+                            }">{{player.status}}</span></p> -->
 
                     </div>
                     <div class="user__options d-flex align-items-center justify-content-center bg-muted" title="Remove user">
@@ -47,7 +47,7 @@
     <div class="row mt-5 h-25">
         <p class="text-center">Waiting for other players</p>
         <div class="cta justify-content-center align-items-center d-flex">
-            <button class="circle-btn"><span>Start Game</span></button>
+            <button class="circle-btn" (click)="startGame()"><span>Start Game</span></button>
         </div>
     </div>
 </section>

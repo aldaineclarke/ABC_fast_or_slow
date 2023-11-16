@@ -1,1 +1,17 @@
-<p>letter-generator works!</p>
+
+<section class="container p-5">
+    <div class="row">
+        <div class="col"><h2 class="text-center">Choose a letter</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col">
+
+            <div class="d-flex flex-column align-items-center">
+                <button (click)="spinWheel()" class="circle-btn"><span>{{selectedLetter ? "Spin Again":"Spin" }}</span></button>
+                <canvas #colorWheel id="canvas" width="500" height="500"></canvas>
+                <button class="circle-btn" *ngIf="selectedLetter" (click)="chooseLetter()"><span>Choose this Letter</span></button>
+            </div>
+        </div>
+    </div>
+</section>
