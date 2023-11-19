@@ -1,6 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { ToastrService } from 'ngx-toastr';
+import { LoadingService } from './loading.service';
+import { interval, take, tap, finalize } from 'rxjs';
+import { Router } from '@angular/router';
 
 interface ListenerCallback {
   (data: any): void;
@@ -14,7 +17,9 @@ interface ListenerObject {
   providedIn: 'root',
 })
 export class SocketService {
-  notif = inject(ToastrService)
+  notif = inject(ToastrService);
+  loaderService = inject(LoadingService);
+  router = inject(Router);
   constructor(private socket: Socket) {
     this.registerListeners();
   }
@@ -41,7 +46,28 @@ export class SocketService {
     },
     countdown: {
       countdown_cb:(data)=>{
-        console.log("Letter selected",data)
+        let ct_val = 10;
+        this.router.navigateByUrl("/game/main-page")
+        this.loaderService.setMessage({main_message: `Game will begin in ${ct_val}`});
+
+        interval(1000).pipe(
+          take(9),
+          tap((val)=>{
+              this.loaderService.setMessage({main_message: `Game will begin in ${ct_val-val}`});
+          }),
+          finalize(()=>{
+            this.loaderService.killLoader();
+            this.emit("start_round",{room_id: "652ec8514bfcaa499d9f4b56", data: btoa(JSON.stringify({}))})
+
+          })
+        ).subscribe();
+        this.loaderService.setMessage({main_message: data.main_message, side_messages: data.side_messages})
+      }
+    },
+    waiting: {
+      waiting_cb:(data)=>{
+        console.log("Hey this is a test")
+        this.loaderService.setMessage({main_message: data.main_message, side_messages: data.side_messages})
       }
     },
     start_round: {
@@ -51,7 +77,7 @@ export class SocketService {
     },
     stop_round:{
       stop_round_cb:(data)=>{
-        console.log("stop round was called")
+        this.loaderService.setMessage({main_message: "Dictator called stop round", })
       } 
     },
     letter_selected: {

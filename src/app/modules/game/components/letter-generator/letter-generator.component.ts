@@ -156,24 +156,8 @@ export class LetterGeneratorComponent {
   }
 
   chooseLetter(){
-      this.socketService.emit("letter_selected",{room_id: "652ec8514bfcaa499d9f4b56", data: btoa(JSON.stringify({selected_letter: this.selectedLetter, }))})
-      this.socketService.on("countdown", (data)=>{
-        this.dialogRef.close()
-
-        interval(1000).pipe(
-          take(15),
-          tap((val)=>{
-              console.log(val)
-              this.loadingService.setMessage({main_message: `Game will begin in ${15-val}`});
-          }),
-          finalize(()=>{
-            this.loadingService.killLoader();
-            console.log("done countdown")
-            this.socketService.emit("start_round",{room_id: "652ec8514bfcaa499d9f4b56", data: btoa(JSON.stringify({}))})
-
-          })
-        ).subscribe();
-      },"countdown_cb")
+    this.dialogRef.close()
+    this.socketService.emit("letter_selected",{room_id: "652ec8514bfcaa499d9f4b56", data: btoa(JSON.stringify({selected_letter: this.selectedLetter, }))})
   }
 
 
