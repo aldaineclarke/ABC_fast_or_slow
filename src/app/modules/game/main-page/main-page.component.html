@@ -16,6 +16,11 @@
             </div>
         </div>
     </div>
+    <div class="row timer-countdown justify-content-end mt-3">
+        <div class="col-md-3" *ngIf="(socketService.countdown$ | async) as countdown">
+            <p class="h2 fw-medium text-end" [ngClass]="{'blink-text': parseStringCountdownToNum(countdown) <= 10 }">{{countdown}}</p>
+        </div>
+    </div>
    
     <div class="row">
         <div class="col">
@@ -26,5 +31,4 @@
         </div>
     </div>
 
-    <button (click)="showModal()" class="btn btn-sm btn-info"> Show modal</button>
 </section>

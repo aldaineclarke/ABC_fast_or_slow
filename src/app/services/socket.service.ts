@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { ToastrService } from 'ngx-toastr';
 import { LoadingService } from './loading.service';
-import { interval, take, tap, finalize } from 'rxjs';
+import { interval, take, tap, finalize, BehaviorSubject, timer, Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
 interface ListenerCallback {
@@ -25,6 +25,34 @@ export class SocketService {
   }
 
   playersConnected:{username:string, email: string}[] = [];
+  private countdownTimer = new BehaviorSubject<string>("00:00");
+  public countdown$ = this.countdownTimer.asObservable();
+  public timer$ = new Observable<number>();
+  public timerSub!:Subscription;
+  startTimer(){
+    this.timerSub = this.timer$.subscribe();
+  }
+  stopTimer(){
+    this.timerSub.unsubscribe();
+  }
+
+  setTimer(timerStart = 30){
+    this.countdownTimer.next(this.parseNumToStopwatch(timerStart))
+    this.timer$ = interval(1000).pipe(
+      take(timerStart + 1),
+      tap((counter)=>{
+        this.countdownTimer.next(this.parseNumToStopwatch(timerStart - counter))
+      })
+    )
+  }
+
+  parseNumToStopwatch(numToParse: number){
+    let minute = 0, second = 0;
+    minute = Math.floor(numToParse / 60);
+    second = numToParse % 60;
+    let timeAsString = `${minute.toString().padStart(2, "0")}:${second.toString().padStart(2,"0")}`;
+    return timeAsString;
+  }
 
 
   //listeners and events
@@ -58,6 +86,8 @@ export class SocketService {
           finalize(()=>{
             this.loaderService.killLoader();
             this.emit("start_round",{room_id: "652ec8514bfcaa499d9f4b56", data: btoa(JSON.stringify({}))})
+            this.setTimer();
+            this.startTimer();
 
           })
         ).subscribe();
@@ -67,16 +97,19 @@ export class SocketService {
     waiting: {
       waiting_cb:(data)=>{
         console.log("Hey this is a test")
-        this.loaderService.setMessage({main_message: data.main_message, side_messages: data.side_messages})
+        this.loaderService.setMessage({main_message: data.main_message, side_messages: data.side_messages});
+
       }
     },
     start_round: {
       start_round_cb:(data)=>{
+
         console.log("round_start",data)
       }
     },
     stop_round:{
       stop_round_cb:(data)=>{
+        this.stopTimer();
         this.loaderService.setMessage({main_message: "Dictator called stop round", })
       } 
     },

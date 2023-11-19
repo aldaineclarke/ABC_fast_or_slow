@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LetterGeneratorComponent } from '../components/letter-generator/letter-generator.component';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-main-page',
@@ -11,8 +12,13 @@ import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 export class MainPageComponent {
   dialog = inject(MatDialog);
   router = inject(Router);
-  ngOnInit(){
+  socketService = inject(SocketService);
+  constructor(){
     this.checkRouteStateToShowModal();
+  }
+
+  parseStringCountdownToNum(countdown: string){ // accepts '00:40'
+    return parseInt(countdown.split(":")[1]) // returns 40
   }
 
   checkRouteStateToShowModal(){

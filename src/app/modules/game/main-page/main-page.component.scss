@@ -1,0 +1,9 @@
+.blink-text{
+    animation: blink 500ms infinite both ease;
+}
+
+@keyframes blink {
+    0%{color: red};
+    50%{color: black};
+    100%{color:red}
+}
