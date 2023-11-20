@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { LetterGeneratorComponent } from '../components/letter-generator/letter-generator.component';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { SocketService } from 'src/app/services/socket.service';
+import { RoomService } from 'src/app/services/room.service';
+import { GameTimerService } from 'src/app/services/game-timer.service';
 
 @Component({
   selector: 'app-main-page',
@@ -13,6 +15,8 @@ export class MainPageComponent {
   dialog = inject(MatDialog);
   router = inject(Router);
   socketService = inject(SocketService);
+  roomService = inject(RoomService);
+  gameTimerService = inject(GameTimerService);
   constructor(){
     this.checkRouteStateToShowModal();
   }

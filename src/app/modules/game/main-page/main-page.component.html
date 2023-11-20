@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="row timer-countdown justify-content-end mt-3">
-        <div class="col-md-3" *ngIf="(socketService.countdown$ | async) as countdown">
+        <div class="col-md-3" *ngIf="(gameTimerService.countdown$ | async) as countdown">
             <p class="h2 fw-medium text-end" [ngClass]="{'blink-text': parseStringCountdownToNum(countdown) <= 10 }">{{countdown}}</p>
         </div>
     </div>

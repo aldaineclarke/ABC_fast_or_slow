@@ -2,8 +2,10 @@ import { Injectable, inject } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { ToastrService } from 'ngx-toastr';
 import { LoadingService } from './loading.service';
-import { interval, take, tap, finalize, BehaviorSubject, timer, Observable, Subscription } from 'rxjs';
+import { interval, take, tap, finalize} from 'rxjs';
 import { Router } from '@angular/router';
+import { RoomService } from './room.service';
+import { GameTimerService } from './game-timer.service';
 
 interface ListenerCallback {
   (data: any): void;
@@ -19,42 +21,14 @@ interface ListenerObject {
 export class SocketService {
   notif = inject(ToastrService);
   loaderService = inject(LoadingService);
+  roomService = inject(RoomService);
+  gameTimerService = inject(GameTimerService);
   router = inject(Router);
   constructor(private socket: Socket) {
     this.registerListeners();
   }
 
   playersConnected:{username:string, email: string}[] = [];
-  private countdownTimer = new BehaviorSubject<string>("00:00");
-  public countdown$ = this.countdownTimer.asObservable();
-  public timer$ = new Observable<number>();
-  public timerSub!:Subscription;
-  startTimer(){
-    this.timerSub = this.timer$.subscribe();
-  }
-  stopTimer(){
-    this.timerSub.unsubscribe();
-  }
-
-  setTimer(timerStart = 30){
-    this.countdownTimer.next(this.parseNumToStopwatch(timerStart))
-    this.timer$ = interval(1000).pipe(
-      take(timerStart + 1),
-      tap((counter)=>{
-        this.countdownTimer.next(this.parseNumToStopwatch(timerStart - counter))
-      })
-    )
-  }
-
-  parseNumToStopwatch(numToParse: number){
-    let minute = 0, second = 0;
-    minute = Math.floor(numToParse / 60);
-    second = numToParse % 60;
-    let timeAsString = `${minute.toString().padStart(2, "0")}:${second.toString().padStart(2,"0")}`;
-    return timeAsString;
-  }
-
-
   //listeners and events
   listenersAndEvents: Record<string, ListenerObject> = {
     join_room: {
@@ -86,8 +60,8 @@ export class SocketService {
           finalize(()=>{
             this.loaderService.killLoader();
             this.emit("start_round",{room_id: "652ec8514bfcaa499d9f4b56", data: btoa(JSON.stringify({}))})
-            this.setTimer();
-            this.startTimer();
+            this.gameTimerService.setTimer();
+            this.gameTimerService.startTimer();
 
           })
         ).subscribe();
@@ -109,7 +83,7 @@ export class SocketService {
     },
     stop_round:{
       stop_round_cb:(data)=>{
-        this.stopTimer();
+        this.gameTimerService.stopTimer();
         this.loaderService.setMessage({main_message: "Dictator called stop round", })
       } 
     },
