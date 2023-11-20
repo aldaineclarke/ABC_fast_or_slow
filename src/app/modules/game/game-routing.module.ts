@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { GameComponent } from './game.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { LobbyComponent } from './lobby/lobby.component';
+import { RoomGuard } from 'src/app/guards/room.guard';
 
 const routes: Routes = [
   {
@@ -12,7 +13,7 @@ const routes: Routes = [
     children:[
       { path:'',pathMatch:'full', component:HomeComponent, data:{animation: "home"}},
       {path: "create-room", component:CreateServerComponent, data:{animation: "create"}},
-      {path: "main-page", component:MainPageComponent, data:{animation: "create"}},
+      {path: "main-page", canDeactivate:[new RoomGuard().canDeactivate], component:MainPageComponent, data:{animation: "create"}},
       {path: "lobby/:room_id", component:LobbyComponent, data:{animation: "create"}}
     ],
     component: GameComponent
