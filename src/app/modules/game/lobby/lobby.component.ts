@@ -6,6 +6,7 @@ import { IRoom } from 'src/app/interfaces/room.interface';
 import { IUser } from 'src/app/interfaces/user.interface';
 import { ApiHttpService } from 'src/app/services/api-http.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { RoomService } from 'src/app/services/room.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { environment } from 'src/environments/environments';
 
@@ -20,6 +21,7 @@ export class LobbyComponent {
   authService = inject(AuthenticationService);
   apiService = inject(ApiHttpService);
   socketServer = inject(SocketService);
+  roomService = inject(RoomService);
   apiUrl = environment.apiUrl;
   room_id = "";
   user !:IUser;
@@ -37,9 +39,9 @@ export class LobbyComponent {
       })
     ).subscribe({
       next:(room)=>{
-        console.log(room)
           this.room_id = room._id;
           this.roomData = room;
+          this.roomService.setRoomData(room);
           if(!this.authService.currentUser){
             this.router.navigate(['/auth/login'])
           }
@@ -59,30 +61,6 @@ export class LobbyComponent {
   getRoomData(room_id:string){
     return this.apiService.get(`${this.apiUrl}rooms/${room_id}`).pipe(map((res:APIResponse<{room:IRoom}>)=>res.data.room));
   }
-
-  totalInRoom = 6;
-    // users = [
-    //   {
-    //     username: "David",
-    //     status: "Connected",
-    //     img: "assets/img/ani-profile/penguin.png"
-    //   },
-    //   {
-    //     username: "Johnny76",
-    //     status: "Connected",
-    //     img: "assets/img/ani-profile/penguin.png"
-    //   },
-    //   {
-    //     username: "Wario_must_win",
-    //     status: "Connecting",
-    //     img: "assets/img/ani-profile/penguin.png"
-    //   },
-    //   {
-    //     username: "Marcus",
-    //     status: "Disconnected",
-    //     img: "assets/img/ani-profile/penguin.png"
-    //   },
-    // ]
 
   startGame(){
     this.user = this.authService.currentUser!;

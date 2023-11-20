@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { finalize, interval, take, tap, timer } from 'rxjs';
 import { LoadingService } from 'src/app/services/loading.service';
+import { RoomService } from 'src/app/services/room.service';
 import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class LetterGeneratorComponent {
   @ViewChild("colorWheel") canvasRef!:ElementRef;
   socketService = inject(SocketService);
   loadingService = inject(LoadingService);
+  roomService = inject(RoomService);
   dialogRef = inject(MatDialogRef);
   spinTimeoutID :any; // Used any here because Node.JS.Timeout throwing an error.
   context !:CanvasRenderingContext2D;
@@ -157,7 +159,7 @@ export class LetterGeneratorComponent {
 
   chooseLetter(){
     this.dialogRef.close()
-    this.socketService.emit("letter_selected",{room_id: "652ec8514bfcaa499d9f4b56", data: btoa(JSON.stringify({selected_letter: this.selectedLetter, }))})
+    this.socketService.emit("letter_selected",{room_id: this.roomService.room_id, data: btoa(JSON.stringify({selected_letter: this.selectedLetter, }))})
   }
 
 

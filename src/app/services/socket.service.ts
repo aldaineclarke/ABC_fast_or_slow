@@ -1,11 +1,12 @@
 import { Injectable, inject } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { ToastrService } from 'ngx-toastr';
-import { LoadingService } from './loading.service';
+import { LoadingService, messageObject } from './loading.service';
 import { interval, take, tap, finalize} from 'rxjs';
 import { Router } from '@angular/router';
 import { RoomService } from './room.service';
 import { GameTimerService } from './game-timer.service';
+import { IRoom } from '../interfaces/room.interface';
 
 interface ListenerCallback {
   (data: any): void;
@@ -33,7 +34,9 @@ export class SocketService {
   listenersAndEvents: Record<string, ListenerObject> = {
     join_room: {
       join_room_cb : (data)=>{
+
         console.log(data)
+        this.roomService.setRoomData(data) // set room data once user joins the room.
       }
     },
     start_game: {
@@ -59,9 +62,15 @@ export class SocketService {
           }),
           finalize(()=>{
             this.loaderService.killLoader();
-            this.emit("start_round",{room_id: "652ec8514bfcaa499d9f4b56", data: btoa(JSON.stringify({}))})
-            this.gameTimerService.setTimer();
-            this.gameTimerService.startTimer();
+            this.emit("start_round",{room_id: this.roomService.room_id, data: btoa(JSON.stringify({}))});
+            this.roomService.roundLetter = data.selected_letter;
+
+            this.roomService.room_data$.subscribe({
+              next: (room)=>{
+                  this.gameTimerService.setTimer( room?.round_duration);
+                  this.gameTimerService.startTimer();
+              }
+            })
 
           })
         ).subscribe();
@@ -82,18 +91,20 @@ export class SocketService {
       }
     },
     stop_round:{
-      stop_round_cb:(data)=>{
+      stop_round_cb:(data:messageObject)=>{
         this.gameTimerService.stopTimer();
-        this.loaderService.setMessage({main_message: "Dictator called stop round", })
+        this.loaderService.setMessage(data)
       } 
     },
     letter_selected: {
       letter_selected_cb:(data)=>{
-        console.log("Letter selected",data)
+        console.log(data)
+        this.roomService.roundLetter = data.selected_letter;
       }
     },
     player_connected: {
       player_connect_cb: (data)=>{
+        console.log(data)
         this.playersConnected = data['players'];
       }
     },
