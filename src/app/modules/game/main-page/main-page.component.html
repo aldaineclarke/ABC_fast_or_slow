@@ -24,9 +24,9 @@
    
     <div class="row">
         <div class="col">
-            <div class="d-flex letter gap-5 justify-content-center flex-column">
+            <div class="d-flex letter gap-5 justify-content-center flex-column" *ngIf="(roomService.room_data$ | async) as roomData">
                 <h1 class="fw-bold display-1 text-center">{{roomService.roundLetter}}</h1>
-                <app-game-fields [game-fields]="['name', 'place', 'thing', 'food', 'celebrity']"></app-game-fields>
+                <app-game-fields [game-fields]="roomData.gameFields"></app-game-fields>
             </div>
         </div>
     </div>

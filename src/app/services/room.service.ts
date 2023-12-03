@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject} from 'rxjs';
 import { IRoom } from '../interfaces/room.interface';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,8 @@ export class RoomService {
     this.room_id = room_data._id;
     console.log("Room ID", this.room_id)
   }
+
+  public gameFieldForm!:FormGroup;
 
   set roundLetter(letter: string){
     this._roundLetter = letter.charAt(0); // If string passed in is longer than 1 character it just takes the first one.

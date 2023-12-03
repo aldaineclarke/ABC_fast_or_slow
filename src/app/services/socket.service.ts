@@ -54,11 +54,10 @@ export class SocketService {
         let ct_val = 10;
         this.router.navigateByUrl("/game/main-page")
         this.loaderService.setMessage({main_message: `Game will begin in ${ct_val}`});
-
         interval(1000).pipe(
-          take(9),
+          take(10),
           tap((val)=>{
-              this.loaderService.setMessage({main_message: `Game will begin in ${ct_val-val}`});
+              this.loaderService.setMessage({main_message: `Game will begin in ${ct_val- ( val + 1 )}`}); // interval begins at 0 so I will use this expression to start subtracting from 1
           }),
           finalize(()=>{
             this.loaderService.killLoader();
@@ -74,12 +73,11 @@ export class SocketService {
 
           })
         ).subscribe();
-        this.loaderService.setMessage({main_message: data.main_message, side_messages: data.side_messages})
+        // this.loaderService.setMessage({main_message: data.main_message, side_messages: data.side_messages})
       }
     },
     waiting: {
       waiting_cb:(data)=>{
-        console.log("Hey this is a test")
         this.loaderService.setMessage({main_message: data.main_message, side_messages: data.side_messages});
 
       }
@@ -92,8 +90,18 @@ export class SocketService {
     },
     stop_round:{
       stop_round_cb:(data:messageObject)=>{
+        console.log("Called in stop round")
         this.gameTimerService.stopTimer();
-        this.loaderService.setMessage(data)
+        this.loaderService.setMessage(data);
+        this.roomService.gameFieldForm.disable();
+        let formFields : {[x:string]: string} = {};
+        //remove the *field-* prefix from the gamefields object key;
+        for(let [key, value] of Object.entries(this.roomService.gameFieldForm.value)){
+          key = key.slice(6);
+          formFields[key] = value as string;
+        }
+        this.emit("round_response", {room_id: this.roomService.room_id, data:btoa(JSON.stringify(formFields))})
+        // emit event which sends all fields and data back to the api to share.
       } 
     },
     letter_selected: {
@@ -113,6 +121,19 @@ export class SocketService {
         this.notif.error(data)
       }
     },
+    round_responses: {
+      round_responses_cb: (data)=>{
+        console.log(data)
+        this.loaderService.killLoader();
+      }
+    },
+    round_response:{
+      round_response_cb: (data)=>{
+        console.log(data)
+
+      }
+    }
+
   };
 
   // Listener registration
