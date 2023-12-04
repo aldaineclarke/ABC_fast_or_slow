@@ -22,9 +22,7 @@ export class MainPageComponent {
     this.checkRouteStateToShowModal();
   }
 
-  parseStringCountdownToNum(countdown: string){ // accepts '00:40'
-    return parseInt(countdown.split(":")[1]) // returns 40
-  }
+
 
   checkRouteStateToShowModal(){
     // had to subscribe to the router events to make sure that if the state is transfered over I would have access to it.

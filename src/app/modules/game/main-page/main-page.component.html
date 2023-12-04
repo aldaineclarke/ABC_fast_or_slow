@@ -1,4 +1,4 @@
-<section class="container min-h-100">
+<!-- <section class="container min-h-100">
     <div class="row">
         <div class="col">
             <div class="d-flex gap-4">
@@ -18,7 +18,7 @@
     </div>
     <div class="row timer-countdown justify-content-end mt-3">
         <div class="col-md-3" *ngIf="(gameTimerService.countdown$ | async) as countdown">
-            <p class="h2 fw-medium text-end" [ngClass]="{'blink-text': parseStringCountdownToNum(countdown) <= 10 }">{{countdown}}</p>
+            <p class="h2 fw-medium text-end" [ngClass]="{'blink-text': gameTimerService.parseStringCountdownToNum(countdown) <= 10 }">{{countdown}}</p>
         </div>
     </div>
    
@@ -31,4 +31,5 @@
         </div>
     </div>
 
-</section>
+</section> -->
+<app-voting></app-voting>

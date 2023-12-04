@@ -1,0 +1,42 @@
+<section class="container">
+    <div class="row mt-5">
+        <div class="col">
+            <h1> Voting Time</h1>
+
+        </div>
+    </div>
+    <div class="row timer-countdown justify-content-end mt-3">
+        <div class="col-md-3" *ngIf="(gameTimerService.countdown$ | async) as countdown">
+            <p class="h2 fw-medium text-end" [ngClass]="{'blink-text': gameTimerService.parseStringCountdownToNum(countdown) <= 10 }">{{countdown}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2 class="display-1 fw-bold text-center">P</h2>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <h3 class="text-center mb-4">{{gameFields[0]}}</h3>
+
+            <div class="voting-pannel d-flex gap-3">
+                <div class="card flex-grow-1 cursor-pointer " [ngClass]="{'isCorrect': user_response.responses['Boy'].isCorrect}" *ngFor="let user_response of user_responses" (click)="toggleResponse(user_response.player_name, 'Boy')">
+                    <div class="card-header">
+                        <p class="text-center m-0 fw-bold">{{user_response.player_name}}</p>
+                    </div>
+                    <div class="user-response card-body card-outline border-primary  p-2" >
+                        <div class="data d-flex flex-column gap-1 flex-grow-1">
+                            <p class="text-center m-0">{{user_response.responses["Boy"].value}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="height:30vh"></div>
+    <div class="row">
+        <div class="col">
+            <p class="mt-5">*Toggle a response as checked by clicking on the user card.</p>
+        </div>
+    </div>
+</section>

@@ -19,6 +19,10 @@ export class GameTimerService {
     this.timerSub.unsubscribe();
   }
 
+  parseStringCountdownToNum(countdown: string){ // accepts '00:40'
+    return parseInt(countdown.split(":")[1]) // returns 40
+  }
+
   setTimer(timerStart = 30){
     this.countdownTimer.next(this.parseNumToStopwatch(timerStart))
     this.timer$ = interval(1000).pipe(

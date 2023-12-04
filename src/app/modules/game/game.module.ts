@@ -9,6 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 import { LetterGeneratorComponent } from './components/letter-generator/letter-generator.component';
 import { GameFieldsComponent } from './components/game-fields/game-fields.component';
 import { LobbyComponent } from './lobby/lobby.component';
+import { VotingComponent } from './components/voting/voting.component';
 
 
 
@@ -20,7 +21,8 @@ import { LobbyComponent } from './lobby/lobby.component';
     GameComponent,
     LetterGeneratorComponent,
     GameFieldsComponent,
-    LobbyComponent
+    LobbyComponent,
+    VotingComponent,
   ],
   imports: [
     CommonModule,

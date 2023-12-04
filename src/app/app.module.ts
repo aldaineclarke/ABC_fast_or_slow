@@ -10,6 +10,7 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { httpInterceptorProviders } from './interceptors';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { VotingComponent } from './modules/game/components/voting/voting.component';
 
 @NgModule({
   declarations: [AppComponent],
