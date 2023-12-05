@@ -23,66 +23,73 @@ export class VotingComponent {
     "Place",
     "Thing"
   ];
+  field_index=  0;
+  gotoNextField(){
+    if(this.field_index < this.gameFields.length-1){
+      this.field_index++;
+    }
+    console.log(this.field_index)
+  }
   ProxyObject = Object;
   user_responses:{player_name:string, responses:{[x:string]: any}}[] = [
     {
       player_name: "Johnny",
       responses: {
           Boy:{value: "Peter", isCorrect:false},
-          Girl: "Paula",
-          Celebrity: "Polo G",
-          Animal: "Panther",
-          Place: "PetersBurg",
-          Food: "Porridge",
-          Thing: "Pot",
+          Girl: {value: "Paula", isCorrect:false},
+          Celebrity: {value: "Polo G", isCorrect:false},
+          Animal: {value: "Panther", isCorrect:false},
+          Place: {value: "Peteresburg", isCorrect:false},
+          Food: {value: "Porridge", isCorrect:false},
+          Thing: {value: "Pot", isCorrect:false},
         }
     },
     {
       player_name: "WizKid",
       responses:{
           Boy: {value: "Pink", isCorrect:false},
-          Girl: "Philisha",
-          Celebrity: "Prince",
-          Animal: "Penguin",
-          Place: "Philadelphia",
-          Food: "Potroast",
-          Thing: "Pan",
+          Girl: {value: "Philisha", isCorrect:false},
+          Celebrity: {value: "Porridge", isCorrect:false},
+          Animal: {value: "Porridge", isCorrect:false},
+          Place: {value: "Porridge", isCorrect:false},
+          Food: {value: "Porridge", isCorrect:false},
+          Thing: {value: "Porridge", isCorrect:false},
         }
     },
     {
       player_name: "Donovon",
       responses:{
           Boy: {value: "Paul", isCorrect:false},
-          Girl: "Penny",
-          Celebrity: "Pink Sweats",
-          Animal: "Pheasant",
-          Place: "Pensilvania",
-          Food: "Peanuts",
-          Thing: "Pantheon",
+          Girl: {value: "Porridge", isCorrect:false},
+          Celebrity: {value: "Porridge", isCorrect:false},
+          Animal: {value: "Porridge", isCorrect:false},
+          Place: {value: "Porridge", isCorrect:false},
+          Food: {value: "Porridge", isCorrect:false},
+          Thing: {value: "Porridge", isCorrect:false},
         }
     },
     {
       player_name: "GKMC",
       responses:{
           Boy: {value: "Peter", isCorrect:false},
-          Girl: "Patty",
-          Celebrity: "Prince",
-          Animal: "Pretty Bird",
-          Place: "Pensilvania",
-          Food: "Peanuts",
-          Thing: "Pen",
+          Girl: {value: "Porridge", isCorrect:false},
+          Celebrity: {value: "Porridge", isCorrect:false},
+          Animal: {value: "Porridge", isCorrect:false},
+          Place: {value: "Porridge", isCorrect:false},
+          Food: {value: "Porridge", isCorrect:false},
+          Thing: {value: "Porridge", isCorrect:false},
         }
     },
     {
       player_name: "Dreezy121",
       responses:{
           Boy: {value: "Pink", isCorrect:false},
-          Girl: "Philisha",
-          Celebrity: "P Diddy",
-          Animal: "Penguin",
-          Place: "Poland",
-          Food: "Pancake",
-          Thing: "Pan",
+          Girl: {value: "Porridge", isCorrect:false},
+          Celebrity: {value: "Porridge", isCorrect:false},
+          Animal: {value: "Porridge", isCorrect:false},
+          Place: {value: "Porridge", isCorrect:false},
+          Food: {value: "Porridge", isCorrect:false},
+          Thing: {value: "Porridge", isCorrect:false},
         }
     },
   ];

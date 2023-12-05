@@ -17,26 +17,33 @@
     </div>
     <div class="row mt-3">
         <div class="col">
-            <h3 class="text-center mb-4">{{gameFields[0]}}</h3>
+            <h3 class="mb-4">Current Field: {{gameFields[field_index]}}</h3>
 
             <div class="voting-pannel d-flex gap-3">
-                <div class="card flex-grow-1 cursor-pointer " [ngClass]="{'isCorrect': user_response.responses['Boy'].isCorrect}" *ngFor="let user_response of user_responses" (click)="toggleResponse(user_response.player_name, 'Boy')">
+                <div class="card flex-grow-1 cursor-pointer " [ngClass]="{'isCorrect': user_response.responses[gameFields[field_index]].isCorrect}" *ngFor="let user_response of user_responses" (click)="toggleResponse(user_response.player_name, gameFields[field_index])">
                     <div class="card-header">
                         <p class="text-center m-0 fw-bold">{{user_response.player_name}}</p>
                     </div>
                     <div class="user-response card-body card-outline border-primary  p-2" >
                         <div class="data d-flex flex-column gap-1 flex-grow-1">
-                            <p class="text-center m-0">{{user_response.responses["Boy"].value}}</p>
+                            <p class="text-center m-0">{{user_response.responses[gameFields[field_index]].value}}</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row mt-5">
+        <div class="col">
+            <div class="d-flex justify-content-center">
+                <button class="circle-btn" (click)="gotoNextField()"><span>{{field_index < gameFields.length-1 ? 'Next Field' : 'Submit Votes'}}</span></button>
+            </div>
+        </div>
+    </div>
     <div class="row" style="height:30vh"></div>
     <div class="row">
         <div class="col">
-            <p class="mt-5">*Toggle a response as checked by clicking on the user card.</p>
+            <p class="mt-5">*Toggle a response as checked by clicking on the user card. <i>There is no turning back.</i></p>
         </div>
     </div>
 </section>
