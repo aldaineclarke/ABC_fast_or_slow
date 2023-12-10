@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { RoomService } from './room.service';
 import { GameTimerService } from './game-timer.service';
 import { IRoom } from '../interfaces/room.interface';
+import { VotingComponent } from '../modules/game/voting/voting.component';
 
 interface ListenerCallback {
   (data: any): void;
@@ -124,7 +125,9 @@ export class SocketService {
     round_responses: {
       round_responses_cb: (data)=>{
         console.log(data)
+        this.router.navigate(["/voting-screen"])
         this.loaderService.killLoader();
+
       }
     },
     round_response:{
