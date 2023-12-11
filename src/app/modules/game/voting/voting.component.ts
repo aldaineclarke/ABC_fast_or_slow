@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { GameTimerService } from 'src/app/services/game-timer.service';
+import { RoomService } from 'src/app/services/room.service';
 
 @Component({
   selector: 'app-voting',
@@ -11,24 +12,22 @@ import { GameTimerService } from 'src/app/services/game-timer.service';
 })
 export class VotingComponent {
   gameTimerService = inject(GameTimerService);
+  roomService = inject(RoomService);
+  gameFields:string[] = [];
   ngOnInit(){
     this.gameTimerService.setTimer();
-    this.gameTimerService.startTimer()
+    this.gameTimerService.startTimer();
+    console.log(this.roomService.responses)
+
   }
-  gameFields = [
-    "Boy",
-    "Girl",
-    "Celebrity",
-    "Animal",
-    "Place",
-    "Thing"
-  ];
   field_index=  0;
-  gotoNextField(){
-    if(this.field_index < this.gameFields.length-1){
+  gotoNextField(fieldCount:number){
+    if(this.field_index < fieldCount){
       this.field_index++;
     }
-    console.log(this.field_index)
+    else{
+      
+    }
   }
   ProxyObject = Object;
   user_responses:{player_name:string, responses:{[x:string]: any}}[] = [
@@ -96,9 +95,9 @@ export class VotingComponent {
 
 
   toggleResponse(player_name:string, field:string){
-      this.user_responses.forEach((response)=>{
-        if(response.player_name == player_name){
-          response.responses[field].isCorrect = !response.responses[field].isCorrect; 
+      this.roomService.responses.forEach((response)=>{
+        if(response.player == player_name){
+          response.response[field].isCorrect = !response.response[field].isCorrect; 
         }
       })
   }

@@ -8,6 +8,7 @@ import { RoomService } from './room.service';
 import { GameTimerService } from './game-timer.service';
 import { IRoom } from '../interfaces/room.interface';
 import { VotingComponent } from '../modules/game/voting/voting.component';
+import { AuthenticationService } from './authentication.service';
 
 interface ListenerCallback {
   (data: any): void;
@@ -25,6 +26,7 @@ export class SocketService {
   loaderService = inject(LoadingService);
   roomService = inject(RoomService);
   gameTimerService = inject(GameTimerService);
+  authService = inject(AuthenticationService);
   router = inject(Router);
   constructor(private socket: Socket) {
     this.registerListeners();
@@ -101,7 +103,8 @@ export class SocketService {
           key = key.slice(6);
           formFields[key] = value as string;
         }
-        this.emit("round_response", {room_id: this.roomService.room_id, data:btoa(JSON.stringify(formFields))})
+        console.log(btoa(JSON.stringify({id:this.authService.currentUser?._id, response:formFields})))
+        this.emit("round_response", {room_id: this.roomService.room_id, data:btoa(JSON.stringify({player:this.authService.currentUser?._id, response:formFields}))})
         // emit event which sends all fields and data back to the api to share.
       } 
     },
@@ -124,8 +127,14 @@ export class SocketService {
     },
     round_responses: {
       round_responses_cb: (data)=>{
-        console.log(data)
-        this.router.navigate(["/voting-screen"])
+        (data as {responses:[]}).responses.forEach((userResponse:{player:string, response:{[x:string]: any}})=>{
+            for(let key in userResponse.response){
+              userResponse.response[key] = {value: userResponse.response[key], isCorrect: false}
+            }
+        })
+        this.roomService.responses = data["responses"];
+
+        this.router.navigate(["/voting-screen"]);
         this.loaderService.killLoader();
 
       }
@@ -134,6 +143,11 @@ export class SocketService {
       round_response_cb: (data)=>{
         console.log(data)
 
+      }
+    },
+    submit_votes:{
+      submit_votes_cb:()=>{
+        console.log("submit Votes Listener");
       }
     }
 

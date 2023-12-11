@@ -15,6 +15,8 @@ export class RoomService {
   public room_id = "";
   private _roundLetter = "";
 
+  responses: {player:string, response:{[key:string]: any}}[]= [];
+
 
   setRoomData(room_data: IRoom){
     console.log(room_data)
