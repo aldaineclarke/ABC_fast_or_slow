@@ -103,7 +103,6 @@ export class SocketService {
           key = key.slice(6);
           formFields[key] = value as string;
         }
-        console.log(btoa(JSON.stringify({id:this.authService.currentUser?._id, response:formFields})))
         this.emit("round_response", {room_id: this.roomService.room_id, data:btoa(JSON.stringify({player:this.authService.currentUser?._id, response:formFields}))})
         // emit event which sends all fields and data back to the api to share.
       } 
@@ -125,6 +124,7 @@ export class SocketService {
         this.notif.error(data)
       }
     },
+    round_response:{},
     round_responses: {
       round_responses_cb: (data)=>{
         (data as {responses:[]}).responses.forEach((userResponse:{player:string, response:{[x:string]: any}})=>{
@@ -139,7 +139,7 @@ export class SocketService {
 
       }
     },
-    round_response:{
+    round_tally:{
       round_response_cb: (data)=>{
         console.log(data)
 
@@ -149,7 +149,8 @@ export class SocketService {
       submit_votes_cb:()=>{
         console.log("submit Votes Listener");
       }
-    }
+    },
+    submit_vote:{}
 
   };
 
