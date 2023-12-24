@@ -51,7 +51,7 @@ export class VotingComponent {
   }
 
   submitVotes(){
-    let data = {room_id:this.roomService.room_id,  data: btoa(JSON.stringify({socket_user: this.authService.currentUser?._id , vote: this.roomService.responses}))};
+    let data = {room_id:this.roomService.room_id,  data: btoa(JSON.stringify({socket_user_id: this.authService.currentUser?._id , vote: this.roomService.responses}))};
     this.socketService.emit("submit_vote", data);
     this.gameTimerService.stopTimer();
   }

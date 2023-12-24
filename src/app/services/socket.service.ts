@@ -127,21 +127,22 @@ export class SocketService {
     round_response:{},
     round_responses: {
       round_responses_cb: (data)=>{
-        (data as {responses:[]}).responses.forEach((userResponse:{player:string, response:{[x:string]: any}})=>{
+        this.roomService.responses = (data as {responses:[]}).responses.filter((response)=> response['player'] != this.authService.currentUser?.username).map((userResponse:{player:string, response:{[x:string]: any}})=>{
             for(let key in userResponse.response){
               userResponse.response[key] = {value: userResponse.response[key], isCorrect: false}
             }
-        })
-        this.roomService.responses = data["responses"];
-
+            return userResponse;
+        });
+        console.log("Round Responses: ", this.roomService.responses)
         this.router.navigate(["/voting-screen"]);
         this.loaderService.killLoader();
-
+        
       }
     },
     round_tally:{
-      round_response_cb: (data)=>{
-        console.log(data)
+      round_tally_cb: (data)=>{
+        // this.loaderService.killLoader();
+        console.log("Round Tally: ",data);
 
       }
     },
