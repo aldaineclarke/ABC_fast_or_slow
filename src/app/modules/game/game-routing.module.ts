@@ -14,7 +14,7 @@ const routes: Routes = [
     children:[
       { path:'',pathMatch:'full', component:HomeComponent, data:{animation: "home"}},
       {path: "create-room", component:CreateServerComponent, data:{animation: "create"}},
-      {path: "main-page", canDeactivate:[new RoomGuard().canDeactivate], component:MainPageComponent, data:{animation: "create"}},
+      {path: "main-page",  component:MainPageComponent, data:{animation: "create"}},
       {path: "lobby/:room_id", component:LobbyComponent, data:{animation: "create"}},
       {path: "voting-screen", component:VotingComponent, data:{animation: "create"}},
       {path: "show-tally", component: LobbyComponent, data: {animation:"create"}}
