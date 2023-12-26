@@ -10,6 +10,7 @@ import { LetterGeneratorComponent } from './components/letter-generator/letter-g
 import { GameFieldsComponent } from './components/game-fields/game-fields.component';
 import { LobbyComponent } from './lobby/lobby.component';
 import { VotingComponent } from './voting/voting.component';
+import { ScoreboardComponent } from './scoreboard/scoreboard.component';
 
 
 
@@ -23,6 +24,7 @@ import { VotingComponent } from './voting/voting.component';
     GameFieldsComponent,
     LobbyComponent,
     VotingComponent,
+    ScoreboardComponent,
   ],
   imports: [
     CommonModule,

@@ -7,6 +7,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { LobbyComponent } from './lobby/lobby.component';
 import { RoomGuard } from 'src/app/guards/room.guard';
 import { VotingComponent } from './voting/voting.component';
+import { ScoreboardComponent } from './scoreboard/scoreboard.component';
 
 const routes: Routes = [
   {
@@ -17,7 +18,7 @@ const routes: Routes = [
       {path: "main-page",  component:MainPageComponent, data:{animation: "create"}},
       {path: "lobby/:room_id", component:LobbyComponent, data:{animation: "create"}},
       {path: "voting-screen", component:VotingComponent, data:{animation: "create"}},
-      {path: "show-tally", component: LobbyComponent, data: {animation:"create"}}
+      {path: "show-tally", component: ScoreboardComponent, data: {animation:"create"}}
     ],
     component: GameComponent
   },

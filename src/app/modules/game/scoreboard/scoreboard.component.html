@@ -1,0 +1,36 @@
+<section class="container">
+    <div class="row mt-4">
+        <h1>Round Scoreboard</h1>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="card shadow-2-strong card-outline-secondary border border-top border-primary">
+            <div class="card-body p-0">
+                <div class="table-responsive table-scroll rounded" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
+                <table class="table mb-0">
+                    <thead style="background-color: #393939;">
+                    <tr class="text-uppercase text-success">
+                        <th scope="col">Username</th>
+                        <th scope="col" *ngFor="let player of ProxyObject.keys(scoreboardData[0]['response'])">{{player}}</th>
+                        <th scope="col">Score</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    
+                    <tr scope="col" *ngFor="let tally of scoreboardData">
+                        <td>{{tally["player"]}}</td>
+                        <td *ngFor="let response of ProxyObject.values(tally['response'])" [ngClass]="{'text-success': response.votes > 0, 'text-danger': response.votes == 0}">{{response.value}}</td>
+                        <td>{{calculateScore(tally.response)}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <p>NOTE: To ensure that content is still responsive A tabular view won't be provided on mobile devices.</p>
+    </div>
+  </section>

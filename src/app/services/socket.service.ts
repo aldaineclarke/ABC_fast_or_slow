@@ -143,6 +143,9 @@ export class SocketService {
       round_tally_cb: (data)=>{
         // this.loaderService.killLoader();
         console.log("Round Tally: ",data);
+        this.loaderService.killLoader();
+        this.roomService.roundTally = data["response"];
+        this.router.navigate(["/game/show-tally"]);
 
       }
     },

@@ -7,6 +7,7 @@ import { FormGroup } from '@angular/forms';
   providedIn: 'root'
 })
 export class RoomService {
+  roundTally: {player: string, response:{[key:string]: {value:string ,votes:number}}}[]=[];
 
   constructor() { }
 
