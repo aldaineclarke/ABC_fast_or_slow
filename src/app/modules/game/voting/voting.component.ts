@@ -9,9 +9,7 @@ import { SocketService } from 'src/app/services/socket.service';
   selector: 'app-voting',
   templateUrl: './voting.component.html',
   styleUrls: ['./voting.component.scss'],
-  providers:[
-    GameTimerService,
-  ]
+
 })
 export class VotingComponent {
   gameTimerService = inject(GameTimerService);
@@ -21,16 +19,14 @@ export class VotingComponent {
   loaderService = inject(LoadingService);
   gameFields:string[] = [];
   ngOnInit(){
-    this.gameTimerService.setTimer();
-    this.gameTimerService.startTimer();
-    this.gameTimerService.countdown$.subscribe({
-      next: (count)=>{
-        if(this.gameTimerService.parseStringCountdownToNum(count) < 1 ){
-          this.loaderService.setMessage({main_message:"Time is up", side_messages:["Submitting Votes"]});
-          this.submitVotes();
-        }
-      }
-    })  
+    // this.gameTimerService.countdown$.subscribe({
+    //   next: (count)=>{
+    //     if(this.gameTimerService.parseStringCountdownToNum(count) < 1 ){
+    //       this.loaderService.setMessage({main_message:"Time is up", side_messages:["Submitting Votes"]});
+    //       this.submitVotes();
+    //     }
+    //   }
+    // })  
   }
   field_index=  0;
   gotoNextField(fieldCount:number){
@@ -51,8 +47,6 @@ export class VotingComponent {
   }
 
   submitVotes(){
-    let data = {room_id:this.roomService.room_id,  data: btoa(JSON.stringify({socket_user_id: this.authService.currentUser?._id , vote: this.roomService.responses}))};
-    this.socketService.emit("submit_vote", data);
-    this.gameTimerService.stopTimer();
+    this.socketService.submitVotes();
   }
 }

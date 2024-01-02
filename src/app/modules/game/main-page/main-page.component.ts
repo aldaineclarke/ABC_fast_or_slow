@@ -36,4 +36,8 @@ export class MainPageComponent {
   showModal() {
       this.letterModalRef = this.dialog.open(LetterGeneratorComponent,{});
   }
+  // Could make all main events be functions in socket server to complete the single responsibility protocol.
+  stopRound(){
+      this.socketService.stopRound();
+  }
 }

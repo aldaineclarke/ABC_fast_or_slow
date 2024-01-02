@@ -67,16 +67,28 @@ export class SocketService {
             this.emit("start_round",{room_id: this.roomService.room_id, data: btoa(JSON.stringify({}))});
             this.roomService.roundLetter = data.selected_letter;
 
-            this.roomService.room_data$.subscribe({
-              next: (room)=>{
-                  this.gameTimerService.setTimer( room?.round_duration);
-                  this.gameTimerService.startTimer();
-              }
-            })
+            // this.roomService.room_data$.subscribe({
+            //   next: (room)=>{
+            //       this.gameTimerService.setTimer( room?.round_duration);
+            //       this.gameTimerService.startTimer();
+            //   }
+            // })
 
           })
         ).subscribe();
         // this.loaderService.setMessage({main_message: data.main_message, side_messages: data.side_messages})
+      }
+    },
+    timer:{
+      timer_cb: ({time_remaining})=>{
+          this.gameTimerService.displayTimer(time_remaining);
+          console.log(time_remaining);
+      }
+    },
+    time_up:{
+      time_up_cb: (data: {next_event: string, message:{main_message: string, side_messages: string[]}})=>{
+        this.loaderService.setMessage({main_message: data.message.main_message, side_messages: data.message.side_messages});
+        this.submitVotes();
       }
     },
     waiting: {
@@ -94,7 +106,6 @@ export class SocketService {
     stop_round:{
       stop_round_cb:(data:messageObject)=>{
         console.log("Called in stop round")
-        this.gameTimerService.stopTimer();
         this.loaderService.setMessage(data);
         this.roomService.gameFieldForm.disable();
         let formFields : {[x:string]: string} = {};
@@ -124,9 +135,11 @@ export class SocketService {
         this.notif.error(data)
       }
     },
-    round_response:{},
+    round_response:{
+      
+    },
     round_responses: {
-      round_responses_cb: (data)=>{
+      round_response_cb: (data)=>{
         this.roomService.responses = (data as {responses:[]}).responses.filter((response)=> response['player'] != this.authService.currentUser?.username).map((userResponse:{player:string, response:{[x:string]: any}})=>{
             for(let key in userResponse.response){
               userResponse.response[key] = {value: userResponse.response[key], isCorrect: false}
@@ -146,7 +159,6 @@ export class SocketService {
         this.loaderService.killLoader();
         this.roomService.roundTally = data["response"];
         this.router.navigate(["/game/show-tally"]);
-
       }
     },
     submit_votes:{
@@ -188,5 +200,14 @@ export class SocketService {
     this.listenersAndEvents.hasOwnProperty(event)
       ? this.socket.emit(event, object)
       : console.error(`${event} is not a registered event`);
+  }
+
+
+  stopRound(){
+    this.emit("stop_round", {room_id: this.roomService.room_id, data: btoa(JSON.stringify({id: this.authService.currentUser?._id}))})
+  }
+  submitVotes(){
+    let data = {room_id:this.roomService.room_id,  data: btoa(JSON.stringify({socket_user_id: this.authService.currentUser?._id , vote: this.roomService.responses}))};
+    this.emit("submit_vote", data);
   }
 }

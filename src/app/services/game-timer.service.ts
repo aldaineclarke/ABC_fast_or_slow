@@ -11,26 +11,12 @@ export class GameTimerService {
   private countdownTimer = new BehaviorSubject<string>("00:00");
   public countdown$ = this.countdownTimer.asObservable();
   public timer$ = new Observable<number>();
-  public timerSub!:Subscription;
-  startTimer(){
-    this.timerSub = this.timer$.subscribe();
-  }
-  stopTimer(){
-    this.timerSub.unsubscribe();
-  }
 
   parseStringCountdownToNum(countdown: string){ // accepts '00:40'
     return parseInt(countdown.split(":")[1]) // returns 40
   }
-
-  setTimer(timerStart = 30){
-    this.countdownTimer.next(this.parseNumToStopwatch(timerStart))
-    this.timer$ = interval(1000).pipe(
-      take(timerStart + 1),
-      tap((counter)=>{
-        this.countdownTimer.next(this.parseNumToStopwatch(timerStart - counter))
-      })
-    )
+  displayTimer(timer:number){
+    this.countdownTimer.next(this.parseNumToStopwatch(timer))
   }
 
   parseNumToStopwatch(numToParse: number){
