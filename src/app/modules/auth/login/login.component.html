@@ -38,8 +38,13 @@
                     <app-validation [control]="loginForm.controls.password" controlName="Password"></app-validation>
                 </div>
                 
-                <div class="cta">
-                    <button class="circle-btn" type="submit"><span>Login</span></button>
+                
+                <div class="d-flex align-items-center gap-5">
+                    <div class="cta">
+                        <button class="circle-btn" type="submit"><span>Login</span></button>
+                    </div>
+                    <p class="mb-0">Need an account? <a class="cursor-pointer" routerLink="/auth/register">Register</a>.</p>
+
                 </div>
             </form>
         </div>
