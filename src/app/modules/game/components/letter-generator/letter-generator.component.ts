@@ -1,9 +1,7 @@
 import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { finalize, interval, take, tap, timer } from 'rxjs';
 import { LoadingService } from 'src/app/services/loading.service';
 import { RoomService } from 'src/app/services/room.service';
-import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-letter-generator',
@@ -14,7 +12,6 @@ export class LetterGeneratorComponent {
   private alphabetArr = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
   selectedLetter = "";
   @ViewChild("colorWheel") canvasRef!:ElementRef;
-  socketService = inject(SocketService);
   loadingService = inject(LoadingService);
   roomService = inject(RoomService);
   dialogRef = inject(MatDialogRef);
@@ -158,8 +155,7 @@ export class LetterGeneratorComponent {
   }
 
   chooseLetter(){
-    this.dialogRef.close()
-    this.socketService.emit("letter_selected",{room_id: this.roomService.room_id, data: btoa(JSON.stringify({selected_letter: this.selectedLetter, }))})
+    this.dialogRef.close(this.selectedLetter)
   }
 
 

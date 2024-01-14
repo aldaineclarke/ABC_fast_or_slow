@@ -71,8 +71,5 @@ export class LobbyComponent {
       id: this.user._id, 
     }
     this.socketServer.emit("start_game", {room_id: this.room_id, data: btoa(JSON.stringify(dataObj))});
-    this.socketServer.on("choose_letter", ()=>{
-      this.router.navigate(["/game/main-page"],{state: {showChooseLetterModal: true}});
-    }, "choose_letter_cb")
   }
 }

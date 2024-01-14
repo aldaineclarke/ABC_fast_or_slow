@@ -9,6 +9,8 @@ import { GameTimerService } from './game-timer.service';
 import { IRoom } from '../interfaces/room.interface';
 import { VotingComponent } from '../modules/game/voting/voting.component';
 import { AuthenticationService } from './authentication.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { LetterGeneratorComponent } from '../modules/game/components/letter-generator/letter-generator.component';
 
 interface ListenerCallback {
   (data: any): void;
@@ -28,6 +30,8 @@ export class SocketService {
   gameTimerService = inject(GameTimerService);
   authService = inject(AuthenticationService);
   router = inject(Router);
+  letterModalRef!: MatDialogRef<LetterGeneratorComponent>;
+  dialog = inject(MatDialog);
   constructor(private socket: Socket) {
     this.registerListeners();
   }
@@ -50,6 +54,13 @@ export class SocketService {
     choose_letter: {
       choose_letter_cb:()=>{
         console.log("I should be called");
+        this.letterModalRef = this.dialog.open(LetterGeneratorComponent,{});
+        this.letterModalRef.afterClosed().subscribe({
+          next:(selected_letter:string)=>{
+            this.emit("letter_selected",{room_id: this.roomService.room_id, data: btoa(JSON.stringify({selected_letter: selected_letter, }))})
+
+          }
+        })      
       }
     },
     countdown: {
