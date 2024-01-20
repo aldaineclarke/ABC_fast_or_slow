@@ -54,7 +54,7 @@ export class SocketService {
     choose_letter: {
       choose_letter_cb:()=>{
         console.log("I should be called");
-        this.letterModalRef = this.dialog.open(LetterGeneratorComponent,{});
+        this.letterModalRef = this.dialog.open(LetterGeneratorComponent,{disableClose:true});
         this.letterModalRef.afterClosed().subscribe({
           next:(selected_letter:string)=>{
             this.emit("letter_selected",{room_id: this.roomService.room_id, data: btoa(JSON.stringify({selected_letter: selected_letter, }))})
