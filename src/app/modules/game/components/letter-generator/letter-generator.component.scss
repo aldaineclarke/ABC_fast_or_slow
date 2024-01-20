@@ -1,0 +1,14 @@
+.letter-wheel{
+    canvas{
+        max-width: 500px;
+        width:50vh;
+    }
+}
+
+@media screen and (max-width:760px) {
+    .letter-wheel{
+        canvas{
+            width:90vw;
+        }
+    }
+}
