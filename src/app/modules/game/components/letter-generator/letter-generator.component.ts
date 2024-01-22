@@ -1,7 +1,8 @@
 import { Component, ElementRef, ViewChild, inject } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LoadingService } from 'src/app/services/loading.service';
 import { RoomService } from 'src/app/services/room.service';
+import { LeaveConfirmationComponent } from '../leave-confirmation/leave-confirmation.component';
 
 @Component({
   selector: 'app-letter-generator',
@@ -15,6 +16,7 @@ export class LetterGeneratorComponent {
   loadingService = inject(LoadingService);
   roomService = inject(RoomService);
   dialogRef = inject(MatDialogRef);
+  dialog = inject(MatDialog);
   spinTimeoutID :any; // Used any here because Node.JS.Timeout throwing an error.
   context !:CanvasRenderingContext2D;
   canvas !:HTMLCanvasElement;
@@ -155,9 +157,20 @@ export class LetterGeneratorComponent {
   }
 
   chooseLetter(){
-    this.dialogRef.close(this.selectedLetter)
+    this.dialogRef.close({selectedLetter: this.selectedLetter, leaveRoom:false});
   }
 
+  leaveRoomConfirmation(){
+    this.dialog.open(LeaveConfirmationComponent).afterClosed().subscribe({
+      next:(isLeavingRoom)=>{
+          if(isLeavingRoom){
+            this.dialogRef.close({leaveRoom: true});
+          }else{
+            console.log("User is not leaving room;");
+          }
+      }
+    })
+  }
 
 
 

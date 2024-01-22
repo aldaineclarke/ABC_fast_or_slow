@@ -11,7 +11,6 @@ import { VotingComponent } from '../modules/game/voting/voting.component';
 import { AuthenticationService } from './authentication.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LetterGeneratorComponent } from '../modules/game/components/letter-generator/letter-generator.component';
-
 interface ListenerCallback {
   (data: any): void;
 }
@@ -56,9 +55,12 @@ export class SocketService {
         console.log("I should be called");
         this.letterModalRef = this.dialog.open(LetterGeneratorComponent,{disableClose:true});
         this.letterModalRef.afterClosed().subscribe({
-          next:(selected_letter:string)=>{
-            this.emit("letter_selected",{room_id: this.roomService.room_id, data: btoa(JSON.stringify({selected_letter: selected_letter, }))})
-
+          next:(data:{selectedLetter: string, leaveRoom:boolean})=>{
+            if(data.leaveRoom){
+              this.leaveRoom();
+            }else{
+              this.emit("letter_selected",{room_id: this.roomService.room_id, data: btoa(JSON.stringify({selected_letter: data.selectedLetter, }))})
+            }
           }
         })      
       }
@@ -221,4 +223,8 @@ export class SocketService {
     let data = {room_id:this.roomService.room_id,  data: btoa(JSON.stringify({socket_user_id: this.authService.currentUser?._id , vote: this.roomService.responses}))};
     this.emit("submit_vote", data);
   }
+  leaveRoom(){
+    this.router.navigate(["/profile"]);
+  }
+
 }

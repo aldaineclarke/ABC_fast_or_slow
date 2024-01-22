@@ -11,6 +11,7 @@ import { GameFieldsComponent } from './components/game-fields/game-fields.compon
 import { LobbyComponent } from './lobby/lobby.component';
 import { VotingComponent } from './voting/voting.component';
 import { ScoreboardComponent } from './scoreboard/scoreboard.component';
+import { LeaveConfirmationComponent } from './components/leave-confirmation/leave-confirmation.component';
 
 
 
@@ -25,6 +26,7 @@ import { ScoreboardComponent } from './scoreboard/scoreboard.component';
     LobbyComponent,
     VotingComponent,
     ScoreboardComponent,
+    LeaveConfirmationComponent,
   ],
   imports: [
     CommonModule,
