@@ -179,7 +179,12 @@ export class SocketService {
         console.log("submit Votes Listener");
       }
     },
-    submit_vote:{}
+    submit_vote:{},
+    "leave-room": {
+      leave_room_cb:()=>{
+        console.log("There was a emission");
+      }
+    }
 
   };
 
@@ -201,7 +206,7 @@ export class SocketService {
     this.listenersAndEvents[event]
       ? (this.listenersAndEvents[event][key] = cb)
       : console.error(`${event} is not a registered listener`);
-    console.log('liteners', this.listenersAndEvents);
+    console.log('listeners', this.listenersAndEvents);
   }
 
   // Emit an event
@@ -224,7 +229,10 @@ export class SocketService {
     this.emit("submit_vote", data);
   }
   leaveRoom(){
+    let data = {room_id:this.roomService.room_id,  data: btoa(JSON.stringify({id: this.authService.currentUser?._id}))};
+    this.emit("leave-room", data);
     this.router.navigate(["/profile"]);
   }
+
 
 }
