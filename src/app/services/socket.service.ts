@@ -144,8 +144,18 @@ export class SocketService {
       }
     },
     room_connect_error: {
-      player_connect_cb: (data)=>{
+      room_connect_error_cb: (data)=>{
         this.notif.error(data)
+      }
+    },
+    room_notification:{
+      room_notification_cb: (data:{innitiator:string, message:string})=>{
+        if(data.innitiator == this.authService.currentUser?.username){
+          let messageArr = data.message.split(" ");
+          messageArr[0] = "You";
+          data.message = messageArr.join(" ")
+        }
+        this.notif.info(data.message)
       }
     },
     round_response:{
@@ -180,9 +190,14 @@ export class SocketService {
       }
     },
     submit_vote:{},
+    
+    
     "leave-room": {
       leave_room_cb:()=>{
-        console.log("There was a emission");
+        this.loaderService.killLoader();
+        console.log("HEY YOU LEFT THE ROOM. WHYYYYYY???")
+        this.router.navigate(["/profile"]);
+
       }
     }
 
@@ -231,7 +246,6 @@ export class SocketService {
   leaveRoom(){
     let data = {room_id:this.roomService.room_id,  data: btoa(JSON.stringify({id: this.authService.currentUser?._id}))};
     this.emit("leave-room", data);
-    this.router.navigate(["/profile"]);
   }
 
 
