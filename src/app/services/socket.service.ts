@@ -199,6 +199,11 @@ export class SocketService {
         this.router.navigate(["/profile"]);
 
       }
+    },
+    gameover: {
+      gameover_cb:()=>{
+        
+      }
     }
 
   };
