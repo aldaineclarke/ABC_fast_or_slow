@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ApiHttpService } from 'src/app/services/api-http.service';
+import { HttpEndpointsService } from 'src/app/services/http-endpoints.service';
 import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
@@ -10,8 +12,10 @@ import { LoadingService } from 'src/app/services/loading.service';
 })
 export class CreateServerComponent {
 
-  loaderService = inject(LoadingService)
+  loaderService = inject(LoadingService);
   router = inject(Router);
+  apiService = inject(ApiHttpService);
+  httpEndpoints = inject(HttpEndpointsService);
 
   items:GameField[]  = [
     {item: "Name", selected:true},
@@ -22,9 +26,10 @@ export class CreateServerComponent {
 
   serverForm = new FormGroup({
     name: new FormControl(''),
-    limit: new FormControl(15),
-    votingTime: new FormControl(30),
-    roundTimeout: new FormControl(30)
+    player_limit: new FormControl(15),
+    voting_duration: new FormControl(30),
+    round_duration: new FormControl(30),
+    round_limit: new FormControl(10)
   })
 
   deleteItem(selectedItem: GameField){
@@ -48,9 +53,13 @@ export class CreateServerComponent {
   }
 
   createServer(){
-      // this.loaderService.setMessage({main_message: "Creating Server"});
-      console.log("Form Submitted");
-      this.router.navigate(['/game/main-page'])
+      this.loaderService.setMessage({main_message: "Creating Server", side_messages:["This will take some time"]})
+      this.apiService.post(this.httpEndpoints.CREATE_SERVER, this.serverForm.value).subscribe({
+        next:(response)=>{
+            this.loaderService.killLoader();
+            this.router.navigate(["/profile"]);
+        }
+      })
   }
 }
 

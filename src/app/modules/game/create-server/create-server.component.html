@@ -22,18 +22,13 @@
     <div class="row mt-3">
         <div class="col">
             <form class="d-flex flex-column create-form" [formGroup]="serverForm" (submit)="createServer()">
-
-                <label>
-                    <span>Username:</span>
-                    <input type="text" placeholder="Kendrick" formControlName="name">
-                </label>
                 <label>
                     <span>Server Name:</span>
                     <input type="text" placeholder="Good Kid Mad City" formControlName="name">
                 </label>
                 <label>
                     <span>Server Limit:</span>
-                    <input type="number" placeholder="20" max="20" formControlName="limit">
+                    <input type="number" placeholder="20" max="20" formControlName="player_limit">
                 </label>
                 <label>
                     <span>Game Fields:</span>
@@ -47,11 +42,15 @@
                 </label>
                 <label>
                     <span>Voting Time (in seconds):</span>
-                    <input type="text" placeholder="60" formControlName="votingTime">
+                    <input type="text" placeholder="60" formControlName="voting_duration">
                 </label>
                 <label>
                     <span>Round Timeout (in seconds):</span>
-                    <input type="text" placeholder="30" formControlName="roundTimeout">
+                    <input type="text" placeholder="30" formControlName="round_duration">
+                </label>
+                <label>
+                    <span>Total Rounds:</span>
+                    <input type="text" placeholder="10" formControlName="round_limit">
                 </label>
                 <div class="cta">
                     <button class="circle-btn"><span>Create Server</span></button>
