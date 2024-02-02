@@ -48,9 +48,24 @@
                     <span>Round Timeout (in seconds):</span>
                     <input type="text" placeholder="30" formControlName="round_duration">
                 </label>
+
                 <label>
                     <span>Total Rounds:</span>
                     <input type="text" placeholder="10" formControlName="round_limit">
+                </label>
+                <label>
+                    <span>Room Privacy</span>
+                    <select formControlName="privacy">
+                        <option value="" disabled>--Choose Room Privacy--</option>
+                        <option value="{{entry.key}}" *ngFor="let entry of roomFormData.privacy | keyvalue">{{entry.value}}</option>
+                    </select>
+                </label>
+                <label>
+                    <span>Room Status</span>
+                    <select formControlName="status">
+                        <option value="" disabled>--Choose Room Status--</option>
+                        <option value="{{entry.key}}" *ngFor="let entry of roomFormData.status | keyvalue">{{entry.value}}</option>
+                    </select>
                 </label>
                 <div class="cta">
                     <button class="circle-btn"><span>Create Server</span></button>
