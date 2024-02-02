@@ -1,11 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, map } from 'rxjs';
+import { Observable, map, switchMap } from 'rxjs';
 import { APIResponse } from 'src/app/interfaces/api-response.interface';
 import { IRoom } from 'src/app/interfaces/room.interface';
 import { IUser } from 'src/app/interfaces/user.interface';
 import { ApiHttpService } from 'src/app/services/api-http.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { HttpEndpointsService } from 'src/app/services/http-endpoints.service';
 import { environment } from 'src/environments/environments';
 
 @Component({
@@ -15,43 +17,57 @@ import { environment } from 'src/environments/environments';
 })
 export class ViewProfileComponent {
   private apiService = inject(ApiHttpService);
-  private apiUrl = environment.apiUrl;
+  private httpEndpoints = inject(HttpEndpointsService);
   private notif = inject(ToastrService);
   public rooms$!:Observable<Array<RoomCard>>;
   public profileData$!:Observable<ProfileData>;
   public user$!:Observable<IUser>;
-
+  public rooms: Array<RoomCard> = [];
+  public userData!:any;
+  public authService = inject(AuthenticationService);
   ngOnInit(){
-    this.profileData$ = this.apiService.get(this.apiUrl+"userprofile").pipe(map((res:APIResponse<ProfileData>)=> res.data));
+    this.getUserProfileData();
   }
 
   getUserProfileData(){
-    this.apiService.get(this.apiUrl+"userprofile").subscribe({
+    this.apiService.get(this.httpEndpoints.USERPROFILE).subscribe({
       next:(res: APIResponse<ProfileData>)=>{
         console.log(res);
-        // this.rooms = this.parseRoomFromResponse(res.data);
+        this.userData = res.data;
+        this.rooms = this.parseRoomFromResponse(res.data);
       },
-      error:(res:HttpErrorResponse)=>{
-        let errorObj: {message:string, errors:any[], data:[]} = res.error;
-        if(errorObj.errors.length >= 1){
-          if( typeof errorObj.errors[0] == 'string'){
-            this.notif.error(errorObj.errors[0]);
-          }else{
-            console.log(errorObj.errors[0].msg)
-            this.notif.error(errorObj.errors[0].msg)
-          }
-        }
+     
+    })
+  }
+
+  updateRooms(){
+    this.apiService.get(this.httpEndpoints.ROOMSENDPOINT,  {"user_id": this.authService.currentUser?._id!}).subscribe({
+      next: (res)=>{
+          this.rooms = this.parseRoomFromResponse(res.data);
       }
     })
   }
 
   parseRoomFromResponse(data:ProfileData):Array<RoomCard>{
+    console.log(data.rooms)
     let rooms = data.rooms.map((room)=>{
       let status = data.statusOptions[(room.status as number)];
       return {room_id: room._id ,room_name: room.name, room_status: status, player_limit:room.player_limit}
     })
 
     return rooms;
+  }
+
+  deleteRoom(room_id:string){
+    // remove the room from the room map then call the api to delete. if successful then all is well. else show error and add the room back to the map
+  
+    this.apiService.delete(this.httpEndpoints.ROOMSENDPOINT+room_id).subscribe({
+      next:(response)=>{
+          this.notif.success("successfully deleted room");
+          this.updateRooms();
+      },
+    });
+
   }
 
   

@@ -1,7 +1,7 @@
-<section class="container" *ngIf="profileData$ | async as data ">
+<section class="container" *ngIf="userData">
     <div class="row mt-5">
         <div class="col">
-            <h1>Welcome {{data.user.username}}!</h1>
+            <h1>Welcome {{userData.user.username}}!</h1>
         </div>
     </div>
     <div class="row mt-5 g-4">
@@ -11,7 +11,7 @@
                     <img src="assets/img/ani-profile/penguin.png" class="round-circle" alt="User profile image">
                 </div>
                 <div class="d-flex mt-2  justify-content-center">
-                    <button class="btn btn-info btn-sm text-center text-white fw-semibold" routerLink="edit" [state]="{user:data.user}">Edit profile</button>
+                    <button class="btn btn-info btn-sm text-center text-white fw-semibold" routerLink="edit" [state]="{user:userData.user}">Edit profile</button>
                 </div>
             </div>
         </div>
@@ -20,21 +20,21 @@
             <div class="d-flex gap-4">
                 <div class="d-flex gap-1">
                     <p class="fs-5 fw-semibold">First Name: </p>
-                    <p class="fs-5">{{data.user.firstName}}</p>
+                    <p class="fs-5">{{userData.user.firstName}}</p>
                 </div>
                 <div class="d-flex gap-1">
                     <p class="fs-5 fw-semibold">Last Name: </p>
-                    <p class="fs-5">{{data.user.lastName}}</p>
+                    <p class="fs-5">{{userData.user.lastName}}</p>
                 </div>
             </div>
             
             <div class="d-flex gap-1">
                 <p class="fs-5 fw-semibold">Email Address: </p>
-                <p class="fs-5">{{data.user.email}}</p>
+                <p class="fs-5">{{userData.user.email}}</p>
             </div>
             <div class="d-flex gap-1">
                 <p class="fs-5 fw-semibold">Points: </p>
-                <p class="fs-5">{{data.user.points || 0}}</p>
+                <p class="fs-5">{{userData.user.points || 0}}</p>
             </div>
 
             <div class="d-flex gap-1">
@@ -56,7 +56,7 @@
         <div class="col">
             <h2>MY ROOMS</h2>
             <div class="row g-4">
-                <ng-container *ngFor="let room of parseRoomFromResponse(data)">
+                <ng-container *ngFor="let room of rooms">
                     <div class="room-wrapper col-md-4">
                         <div type="button" id="room-{{room.room_id}}" data-bs-toggle="dropdown" aria-expanded="false" class="room-info-card card p-3 py-2" [ngClass]="{'border-warning': room.room_status == 'InProgress', 'border-success': room.room_status == 'Online', 'border-danger': room.room_status == 'Offline'}">
                             <div class="d-flex gap-1"> 
@@ -73,10 +73,10 @@
                             </div>
                         </div>
                         <ul class="dropdown-menu" attr.aria-labelledby="room-{{room.room_id}}">
-                            <li><a class="dropdown-item" routerLink="/game/lobby/{{room.room_id}}">Open Lobby</a></li>
-                            <li><a class="dropdown-item" href="#">Edit Room</a></li>
-                            <li><a class="dropdown-item" href="#">Share Room</a></li>
-                            <li><a class="dropdown-item text-danger" href="#">Delete</a></li>
+                            <li><a class="dropdown-item cursor-pointer" routerLink="/game/lobby/{{room.room_id}}">Open Lobby</a></li>
+                            <li><a class="dropdown-item cursor-pointer" routerLink="/">Edit Room</a></li>
+                            <li><a class="dropdown-item cursor-pointer" href="#">Share Room</a></li>
+                            <li><a class="dropdown-item text-danger cursor-pointer" (click)="deleteRoom(room.room_id)">Delete</a></li>
                           </ul>
                     </div>
 

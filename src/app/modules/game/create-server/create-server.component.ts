@@ -73,7 +73,7 @@ export class CreateServerComponent {
         }
       }
 
-      this.apiService.post(this.httpEndpoints.CREATE_SERVER, {...this.serverForm.value, gameFields}).subscribe({
+      this.apiService.post(this.httpEndpoints.ROOMSENDPOINT, {...this.serverForm.value, gameFields}).subscribe({
         next:(response)=>{
             this.loaderService.killLoader();
             this.router.navigate(["/profile"]);

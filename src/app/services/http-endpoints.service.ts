@@ -7,6 +7,7 @@ export class HttpEndpointsService {
   private BASEURL = environment.apiUrl;
   constructor() { }
 
-  CREATE_SERVER = this.BASEURL+"rooms";
+  ROOMSENDPOINT = this.BASEURL+"rooms/";
   GET_CREATE_SERVER_FORMDATA = this.BASEURL+"rooms/create";
+  USERPROFILE = this.BASEURL+"userprofile";
 }
