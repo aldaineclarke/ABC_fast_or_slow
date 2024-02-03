@@ -74,7 +74,7 @@
                         </div>
                         <ul class="dropdown-menu" attr.aria-labelledby="room-{{room.room_id}}">
                             <li><a class="dropdown-item cursor-pointer" routerLink="/game/lobby/{{room.room_id}}">Open Lobby</a></li>
-                            <li><a class="dropdown-item cursor-pointer" routerLink="/">Edit Room</a></li>
+                            <li><a class="dropdown-item cursor-pointer" routerLink="/room/{{room.room_id}}/edit">Edit Room</a></li>
                             <li><a class="dropdown-item cursor-pointer" href="#">Share Room</a></li>
                             <li><a class="dropdown-item text-danger cursor-pointer" (click)="deleteRoom(room.room_id)">Delete</a></li>
                           </ul>

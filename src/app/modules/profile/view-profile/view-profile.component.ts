@@ -8,6 +8,7 @@ import { IUser } from 'src/app/interfaces/user.interface';
 import { ApiHttpService } from 'src/app/services/api-http.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { HttpEndpointsService } from 'src/app/services/http-endpoints.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { environment } from 'src/environments/environments';
 
 @Component({
@@ -25,6 +26,7 @@ export class ViewProfileComponent {
   public rooms: Array<RoomCard> = [];
   public userData!:any;
   public authService = inject(AuthenticationService);
+  public loaderService = inject(LoadingService);
   ngOnInit(){
     this.getUserProfileData();
   }
@@ -43,6 +45,7 @@ export class ViewProfileComponent {
   updateRooms(){
     this.apiService.get(this.httpEndpoints.ROOMSENDPOINT,  {"user_id": this.authService.currentUser?._id!}).subscribe({
       next: (res)=>{
+        this.loaderService.killLoader();
           this.rooms = this.parseRoomFromResponse(res.data);
       }
     })
@@ -60,7 +63,7 @@ export class ViewProfileComponent {
 
   deleteRoom(room_id:string){
     // remove the room from the room map then call the api to delete. if successful then all is well. else show error and add the room back to the map
-  
+    this.loaderService.setMessage({main_message:"Deleting Room"})
     this.apiService.delete(this.httpEndpoints.ROOMSENDPOINT+room_id).subscribe({
       next:(response)=>{
           this.notif.success("successfully deleted room");

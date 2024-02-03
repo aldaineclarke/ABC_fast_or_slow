@@ -12,6 +12,7 @@ import { LobbyComponent } from './lobby/lobby.component';
 import { VotingComponent } from './voting/voting.component';
 import { ScoreboardComponent } from './scoreboard/scoreboard.component';
 import { LeaveConfirmationComponent } from './components/leave-confirmation/leave-confirmation.component';
+import { EditServerComponent } from './edit-server/edit-server.component';
 
 
 
@@ -27,6 +28,7 @@ import { LeaveConfirmationComponent } from './components/leave-confirmation/leav
     VotingComponent,
     ScoreboardComponent,
     LeaveConfirmationComponent,
+    EditServerComponent,
   ],
   imports: [
     CommonModule,

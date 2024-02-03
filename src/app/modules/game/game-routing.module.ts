@@ -8,6 +8,7 @@ import { LobbyComponent } from './lobby/lobby.component';
 import { RoomGuard } from 'src/app/guards/room.guard';
 import { VotingComponent } from './voting/voting.component';
 import { ScoreboardComponent } from './scoreboard/scoreboard.component';
+import { EditServerComponent } from './edit-server/edit-server.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
     children:[
       { path:'',pathMatch:'full', component:HomeComponent, data:{animation: "home"}},
       {path: "create-room", component:CreateServerComponent, data:{animation: "create"}},
+      {path: "room/:id/edit", component:EditServerComponent, data:{animation: "create"}},
       {path: "main-page",  component:MainPageComponent, data:{animation: "create"}},
       {path: "lobby/:room_id", component:LobbyComponent, data:{animation: "create"}},
       {path: "voting-screen", component:VotingComponent, data:{animation: "create"}},
