@@ -60,6 +60,7 @@ export class CreateServerComponent {
   createField(){
     let newField:GameField = {item: "", selected: true};
     newField.item = this.columnField?.value;
+    if(!this.columnField.value) return;
     this.items.push(newField);
     this.columnField.reset();
   }

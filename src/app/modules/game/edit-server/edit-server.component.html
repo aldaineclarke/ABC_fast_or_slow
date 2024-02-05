@@ -1,4 +1,4 @@
-<section class="container">
+<section class="container" *ngIf="fetchRoomData$ | async as roomData">
 
     <div class="row pt-5">
         <div class="col">
@@ -13,7 +13,7 @@
                     </svg>
             
                 </button>
-                <h1 class="mb-0">Edit Server.</h1>
+                <h1 class="mb-0">Edit {{roomData.name | titlecase}} Server.</h1>
             </div>
         </div>
     </div>

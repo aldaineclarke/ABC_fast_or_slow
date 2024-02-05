@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { mergeMap, of, switchMap } from 'rxjs';
+import { Observable, mergeMap, of, switchMap } from 'rxjs';
 import { IRoom } from 'src/app/interfaces/room.interface';
 import { ApiHttpService } from 'src/app/services/api-http.service';
 import { HttpEndpointsService } from 'src/app/services/http-endpoints.service';
@@ -24,41 +24,37 @@ export class EditServerComponent {
   roomFormData!: {status:Object, privacy:Object};
   room_id = "";
   items:GameField[]  = [];
+  fetchRoomData$!: Observable<IRoom>;
 
   ngOnInit(){
-    this.getRoomData();
+    this.fetchRoomData$ = this.apiService.get(this.httpEndpoints.GET_CREATE_SERVER_FORMDATA).pipe(
+      switchMap((res) => {
+        this.roomFormData = res["data"];
+        return this.route.paramMap;
+      }),
+      switchMap((paramMap) => {
+        const id = paramMap.get("id");
+        this.room_id = id!;
+        if (!id) {
+          alert("No ID Passed");
+        }
+        return this.apiService.get(this.httpEndpoints.ROOMSENDPOINT + id);
+      }),
+      mergeMap((res)=>{
+        let roomData:IRoom = res.data.room;
+        this.updateFormDataValues(roomData, this.roomFormData.privacy, "privacy")
+        this.updateFormDataValues(roomData, this.roomFormData.status,"status");
+        this.setFields(roomData.gameFields);
+        this.setServerFormValues(roomData);
+        return of(roomData);
+      })
+      )
 
 
   }
 
   getRoomData(){
-    this.apiService.get(this.httpEndpoints.GET_CREATE_SERVER_FORMDATA).pipe(
-        switchMap((res) => {
-          this.roomFormData = res["data"];
-          return this.route.paramMap;
-        }),
-        switchMap((paramMap) => {
-          const id = paramMap.get("id");
-          this.room_id = id!;
-          if (!id) {
-            alert("No ID Passed");
-          }
-          return this.apiService.get(this.httpEndpoints.ROOMSENDPOINT + id);
-        }),
-        mergeMap((res)=>{
-          let roomData:IRoom = res.data.room;
-          this.updateFormDataValues(roomData, this.roomFormData.privacy, "privacy")
-          this.updateFormDataValues(roomData, this.roomFormData.status,"status")
-          return of(roomData);
-        })
-        ).subscribe({
-          next:(roomData)=>{
-            console.log(roomData);
-            this.setFields(roomData.gameFields);
-            this.setServerFormValues(roomData);
-          }
-      
-    });
+    
   }
 
   serverForm = new FormGroup({
