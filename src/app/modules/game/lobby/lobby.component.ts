@@ -72,4 +72,8 @@ export class LobbyComponent {
     }
     this.socketServer.emit("start_game", {room_id: this.room_id, data: btoa(JSON.stringify(dataObj))});
   }
+
+  leaveServer(){
+    this.socketServer.leaveRoom();
+  }
 }
